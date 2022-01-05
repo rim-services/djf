@@ -7,7 +7,7 @@ from datetime import date
 def index(request):
     return render(request, "index.html")
 
-def user_login(request):
+def connexion_chercheur_emploi(request):
     if request.user.is_authenticated:
         return redirect("/")
     else:
@@ -20,15 +20,15 @@ def user_login(request):
                 user1 = C_emploi.objects.get(user=user)
                 if user1.type == "c_emploi":
                     login(request, user)
-                    return redirect("/user_homepage")
+                    return redirect("/page_home_chercheur_emploi")
             else:
                 thank = True
-                return render(request, "user_login.html", {"thank":thank})
-    return render(request, "user_login.html")
+                return render(request, "connexion_chercheur_emploi.html", {"thank":thank})
+    return render(request, "connexion_chercheur_emploi.html")
 
-def user_homepage(request):
+def page_home_chercheur_emploi(request):
     if not request.user.is_authenticated:
-        return redirect('/user_login/')
+        return redirect('/connexion_chercheur_emploi/')
     c_emploi = C_emploi.objects.get(user=request.user)
     if request.method=="POST":   
         email = request.POST['email']
@@ -51,48 +51,48 @@ def user_homepage(request):
         except:
             pass
         alert = True
-        return render(request, "user_homepage.html", {'alert':alert})
-    return render(request, "user_homepage.html", {'c_emploi':c_emploi})
+        return render(request, "page_home_chercheur_emploi.html", {'alert':alert})
+    return render(request, "page_home_chercheur_emploi.html", {'c_emploi':c_emploi})
 
-def all_jobs(request):
-    travail = Travail.objects.all().order_by('-start_date')
+def les_annonces_emploi(request):
+    travail = Travail.objects.all().order_by('-date_debut')
     c_emploi = C_emploi.objects.get(user=request.user)
     deposer = Deposer.objects.filter(c_emploi=c_emploi)
     data = []
     for i in deposer:
         data.append(i.travail.id)
-    return render(request, "all_jobs.html", {'travail':travail, 'data':data})
+    return render(request, "les_annonces_emploi.html", {'travail':travail, 'data':data})
 
-def job_detail(request, myid):
+def detail_annonce(request, myid):
     travail = Travail.objects.get(id=myid)
-    return render(request, "job_detail.html", {'travail':travail})
+    return render(request, "detail_annonce.html", {'travail':travail})
 
-def job_apply(request, myid):
+def deposer_pour_emploi(request, myid):
     if not request.user.is_authenticated:
-        return redirect("/user_login")
+        return redirect("/connexion_chercheur_emploi")
     c_emploi = C_emploi.objects.get(user=request.user)
     travail = Travail.objects.get(id=myid)
     date1 = date.today()
-    if travail.date_ < date1:
+    if travail.date_fin < date1:
         closed=True
-        return render(request, "job_apply.html", {'closed':closed})
+        return render(request, "deposer_pour_emploi.html", {'closed':closed})
     elif travail.date_debut > date1:
         notopen=True
-        return render(request, "job_apply.html", {'notopen':notopen})
+        return render(request, "deposer_pour_emploi.html", {'notopen':notopen})
     else:
         if request.method == "POST":
             cv = request.FILES['cv']
             Deposer.objects.create(travail=travail, entreprise=travail.entreprise, c_emploi=c_emploi, cv=cv, date_depot=date.today())
             alert=True
-            return render(request, "job_apply.html", {'alert':alert})
-    return render(request, "job_apply.html", {'travail':travail})
+            return render(request, "deposer_pour_emploi.html", {'alert':alert})
+    return render(request, "deposer_pour_emploi.html", {'travail':travail})
 
-def all_applicants(request):
+def les_interesses(request):
     entreprise = Entreprise.objects.get(user=request.user)
-    deposer = Deposer.objects.filter(company=entreprise)
-    return render(request, "all_applicants.html", {'deposer':deposer})
+    deposer = Deposer.objects.filter(entreprise=entreprise)
+    return render(request, "les_interesses.html", {'deposer':deposer})
 
-def signup(request):
+def inscription_chercheur_emploi(request):
     if request.method=="POST":   
         username = request.POST['email']
         first_name=request.POST['first_name']
@@ -111,10 +111,10 @@ def signup(request):
         c = C_emploi.objects.create(user=user, telephone=telephon, sexe=sexe, image=image, type="c_emploi")
         user.save()
         c.save()
-        return render(request, "user_login.html")
-    return render(request, "signup.html")
+        return render(request, "connexion_chercheur_emploi.html")
+    return render(request, "inscription_chercheur_emploi.html")
 
-def company_signup(request):
+def inscription_entreprise(request):
     if request.method=="POST":   
         username = request.POST['username']
         email = request.POST['email']
@@ -139,10 +139,10 @@ def company_signup(request):
         entreprise = Entreprise.objects.create(user=user, telephone=telephon, sexe=sexe, image=image, nom_entreprise=nom_entreprise, type="entreprise", status="non_confirmer")
         user.save()
         entreprise.save()
-        return render(request, "company_login.html")
-    return render(request, "company_signup.html")
+        return render(request, "connexion_entreprise.html")
+    return render(request, "inscription_entreprise.html")
 
-def company_login(request):
+def connexion_entreprise(request):
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -152,15 +152,15 @@ def company_login(request):
             user1 = Entreprise.objects.get(user=user)
             if user1.type == "entreprise" and user1.status != "non_confirmer":
                 login(request, user)
-                return redirect("/company_homepage")
+                return redirect("/page_home_entreprise")
         else:
             alert = True
-            return render(request, "company_login.html", {"alert":alert})
-    return render(request, "company_login.html")
+            return render(request, "connexion_entreprise.html", {"alert":alert})
+    return render(request, "connexion_entreprise.html")
 
-def company_homepage(request):
+def page_home_entreprise(request):
     if not request.user.is_authenticated:
-        return redirect("/company_login")
+        return redirect("/connexion_entreprise")
     entreprise = Entreprise.objects.get(user=request.user)
     if request.method=="POST":   
         email = request.POST['email']
@@ -184,12 +184,12 @@ def company_homepage(request):
         except:
             pass
         alert = True
-        return render(request, "company_homepage.html", {'alert':alert})
-    return render(request, "company_homepage.html", {'entreprise':entreprise})
+        return render(request, "page_home_entreprise.html", {'alert':alert})
+    return render(request, "page_home_entreprise.html", {'entreprise':entreprise})
 
-def add_job(request):
+def publier_annonce(request):
     if not request.user.is_authenticated:
-        return redirect("/company_login")
+        return redirect("/connexion_entreprise")
     if request.method == "POST":
         titre = request.POST['titre']
         date_debut = request.POST['date_debut']
@@ -204,19 +204,19 @@ def add_job(request):
         travail = Travail.objects.create(entreprise=entreprise, titre=titre,date_debut=date_debut, date_fin=date_fin, salaire=salaire, image=entreprise.image, experience=experience, adresse=adresse, skills=skills, description=description, date_creation=date.today())
         travail.save()
         alert = True
-        return render(request, "add_job.html", {'alert':alert})
-    return render(request, "add_job.html")
+        return render(request, "publier_annonce.html", {'alert':alert})
+    return render(request, "publier_annonce.html")
 
-def job_list(request):
+def liste_des_annonces(request):
     if not request.user.is_authenticated:
-        return redirect("/company_login")
+        return redirect("/connexion_entreprise")
     entreprises = Entreprise.objects.get(user=request.user)
     travails = Travail.objects.filter(entreprise=entreprises)
-    return render(request, "job_list.html", {'travails':travails})
+    return render(request, "liste_des_annonces.html", {'travails':travails})
 
-def edit_job(request, myid):
+def modifier_annonce(request, myid):
     if not request.user.is_authenticated:
-        return redirect("/company_login")
+        return redirect("/connexion_entreprise")
     travail = Travail.objects.get(id=myid)
     if request.method == "POST":
         title = request.POST['titre']
@@ -243,60 +243,60 @@ def edit_job(request, myid):
             travail.date_fin = end_date
             travail.save()
         alert = True
-        return render(request, "edit_job.html", {'alert':alert})
-    return render(request, "edit_job.html", {'travail':travail})
+        return render(request, "modifier_annonce.html", {'alert':alert})
+    return render(request, "modifier_annonce.html", {'travail':travail})
 
-def company_logo(request, myid):
+def logo_entreprise(request, myid):
     if not request.user.is_authenticated:
-        return redirect("/company_login")
+        return redirect("/connexion_entreprise")
     travail = Travail.objects.get(id=myid)
     if request.method == "POST":
         image = request.FILES['logo']
         travail.image = image 
         travail.save()
         alert = True
-        return render(request, "company_logo.html", {'alert':alert})
-    return render(request, "company_logo.html", {'travail':travail})
+        return render(request, "logo_entreprise.html", {'alert':alert})
+    return render(request, "logo_entreprise.html", {'travail':travail})
 
-def Logout(request):
+def deconnecter(request):
     logout(request)
     return redirect('/')
 
-def admin_login(request):
+def connexion_administrateur(request):
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
         if user.is_superuser:
             login(request, user)
-            return redirect("/all_companies")
+            return redirect("/tous_les_entreprises")
         else:
             alert = True
-            return render(request, "admin_login.html", {"alert":alert})
-    return render(request, "admin_login.html")
+            return render(request, "connexion_administrateur.html", {"alert":alert})
+    return render(request, "connexion_administrateur.html")
 
-def view_applicants(request):
+def liste_chercheurs_emploi(request):
     if not request.user.is_authenticated:
-        return redirect("/admin_login")
+        return redirect("/connexion_administrateur")
     c_emploi = C_emploi.objects.all()
-    return render(request, "view_applicants.html", {'c_emploi':c_emploi})
+    return render(request, "liste_chercheurs_emploi.html", {'c_emploi':c_emploi})
 
-def delete_applicant(request, myid):
+def supprimer_un_chercheur_emploi(request, myid):
     if not request.user.is_authenticated:
-        return redirect("/admin_login")
+        return redirect("/connexion_administrateur")
     c_emploi = User.objects.filter(id=myid)
     c_emploi.delete()
-    return redirect("/view_applicants")
+    return redirect("/liste_chercheurs_emploi")
 
-def pending_companies(request):
+def entreprises_non_confirmer(request):
     if not request.user.is_authenticated:
-        return redirect("/admin_login")
+        return redirect("/connexion_administrateur")
     entreprises = Entreprise.objects.filter(status="non_confirmer")
-    return render(request, "pending_companies.html", {'entreprises':entreprises})
+    return render(request, "entreprises_non_confirmer.html", {'entreprises':entreprises})
 
 def change_status(request, myid):
     if not request.user.is_authenticated:
-        return redirect("/admin_login")
+        return redirect("/connexion_administrateur")
     entreprise = Entreprise.objects.get(id=myid)
     if request.method == "POST":
         status = request.POST['status']
@@ -306,27 +306,27 @@ def change_status(request, myid):
         return render(request, "change_status.html", {'alert':alert})
     return render(request, "change_status.html", {'entreprise':entreprise})
 
-def accepted_companies(request):
+def entreprises_confirmer(request):
     if not request.user.is_authenticated:
-        return redirect("/admin_login")
+        return redirect("/connexion_administrateur")
     entreprises = Entreprise.objects.filter(status="Accepted")
-    return render(request, "accepted_companies.html", {'entreprises':entreprises})
+    return render(request, "entreprises_confirmer.html", {'entreprises':entreprises})
 
-def rejected_companies(request):
+def entreprises_rejeter(request):
     if not request.user.is_authenticated:
-        return redirect("/admin_login")
+        return redirect("/connexion_administrateur")
     entreprises = Entreprise.objects.filter(status="Rejected")
-    return render(request, "rejected_companies.html", {'entreprises':entreprises})
+    return render(request, "entreprises_rejeter.html", {'entreprises':entreprises})
 
-def all_companies(request):
+def tous_les_entreprises(request):
     if not request.user.is_authenticated:
-        return redirect("/admin_login")
+        return redirect("/connexion_administrateur")
     entreprises = Entreprise.objects.all()
-    return render(request, "all_companies.html", {'entreprises':entreprises})
+    return render(request, "tous_les_entreprises.html", {'entreprises':entreprises})
 
-def delete_company(request, myid):
+def supprimer_entreprise(request, myid):
     if not request.user.is_authenticated:
-        return redirect("/admin_login")
+        return redirect("/connexion_administrateur")
     entreprise = User.objects.filter(id=myid)
     entreprise.delete()
-    return redirect("/all_companies")
+    return redirect("/tous_les_entreprises")

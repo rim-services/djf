@@ -1,7 +1,7 @@
 {% extends 'admin_navbar.html' %}
 
 {% block title %} Les interréssés {% endblock %}
-{% block view_applicants %} active {% endblock %}
+{% block les_interesses %} active {% endblock %}
 {% block css %}
 {% endblock %}
 {% block body %}
@@ -27,8 +27,8 @@
             <td>{{d.telephone}}</td>
             <td>{{d.sexe}}</td>
             <td><img src="{{d.image.url}}" class="rounded-circle" width="90px" height="70px"></td>
-            <td><a href="/delete_applicant/{{d.user.id}}/" class="btn btn-danger" onclick="return confirm('vouler vous supprimer ce candidature?')">supprimer</a></td>
-        </tr>
+            <td><a href="/supprimer_un_chercheur_emploi/{{d.user.id}}/" class="btn btn-danger" onclick="return confirm('vouler vous supprimer ce candidature?')">supprimer</a></td>
+        </tr> 
         {% endfor %}
     </tbody>
 </table>

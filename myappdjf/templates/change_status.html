@@ -1,7 +1,7 @@
 {% extends 'admin_navbar.html' %}
 
 {% block title %} Approuver une entreprise {% endblock %}
-{% block application_form %} active {% endblock %}
+{% block deposer_form %} active {% endblock %}
 {% block css %}
 {% endblock %}
 {% block body %}
@@ -9,13 +9,13 @@
     <div class="container mt-5">
         <div class="mb-3">
             <label for="username" class="form-label"><i style="font-weight: bold;"> Nom de l'entreprise</i></label>
-            <input type="text" class="form-control" id="company_name" name="company_name" value="{{company.company_name}}">
+            <input type="text" class="form-control" id="company_name" name="nom_entreprise" value="{{entreprise.nom_entreprise}}">
         </div>
         <div class="mb-3">
             <label for="password" class="form-label"><i style="font-weight: bold;">Status</i></label>
             <select name="status" id="status" class="form-control">
-                <option value="Accepted">Accepter l'epe</option>
-                <option value="Rejected">Rejeter l'epe</option>
+                <option value="Accepted">Accepter l'entreprise</option>
+                <option value="Rejected">Rejeter l'entreprise</option>
             </select>
         </div>
         <br>
@@ -28,7 +28,7 @@
 <script>
     {% if alert %}
     alert("Le status a été changé avec succées.");
-    window.location.href = "/all_companies"
+    window.location.href = "/tous_les_entreprises"
     {% endif %}
 </script>
 {% endblock %}

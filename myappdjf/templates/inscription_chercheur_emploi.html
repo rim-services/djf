@@ -1,7 +1,7 @@
 {% extends 'basic.html' %}
 
-{% block title %} Creation du compte pour l'entreprise {% endblock %}
-{% block company_login %} active {% endblock %}
+{% block title %} Creation du compte pour un chercheur d'emploi {% endblock %}
+{% block connexion_chercheur_emploi %} active {% endblock %}
 {% block css %}
 {% endblock %}
 {% block body %}
@@ -10,47 +10,40 @@
 
     <div class="row">
         <div class="form-group col-md-6">
-            <label>Nom du DG</label>
-            <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Enter le nom du DG">
+            <label>Nom</label>
+            <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Entrer votre nom">
         </div>
         <div class="form-group col-md-6">
-            <label>Prenom du DG</label>
-            <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Entrer le prenom du DG">
-        </div>
-    </div>
-
-    <div class="row mt-4">
-        <div class="form-group col-md-12">
-            <label>Nom d'utilisateur</label>
-            <input type="text" class="form-control" name="username" id="username" placeholder="Entrer le nom d'utilisateur">
+            <label>Prenom</label>
+            <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Entrer votre prenom">
         </div>
     </div>
     
     <div class="row mt-4">
         <div class="form-group col-md-6">
             <label>Mot de passe</label>
-            <input type="password" class="form-control" name="password1" id="password1" placeholder="Entrer le mot de passe">
+            <input type="password" class="form-control" name="password1" id="password1" placeholder="Entrer votre mot de passe">
         </div>
         <div class="form-group col-md-6">
             <label>Confirmer le mot de passe</label>
-            <input type="password" class="form-control" name="password2" id="password2" placeholder="Entrer la confirmation du mot de passe">
+            <input type="password" class="form-control" name="password2" id="password2" placeholder="Confirmer le mot de passe">
         </div>
     </div>
 
     <div class="row mt-4">
         <div class="form-group col-md-6">
             <label>Email </label>
-            <input type="email" class="form-control" name="email" id="email" placeholder="Entrer votre Email ">
+            <input type="email" class="form-control" name="email" id="email" placeholder="Entrer votre email">
         </div>
         <div class="form-group col-md-6">
-            <label>Numero telephone</label>
+            <label>numero telephone</label>
             <input type="tel" class="form-control" name="telephone" id="phone" placeholder="Entrer le numero du telephone">
         </div>
     </div>
 
     <div class="row mt-4">
         <div class="form-group col-md-6">
-            <label>Sexe</label>
+            <label>sexe</label>
             <div style="border: 1px solid lightgrey; padding: 5px; border-radius: 6px;">
             <div class="form-check form-check-inline">
                 <input type="radio" class="custom-control-input" name="sexe" id="male" value="Male">
@@ -63,17 +56,10 @@
         </div>
         </div>
         <div class="form-group col-md-6">
-            <label>Logo de l'entreprise</label>
-            <input type="file" class="form-control" name="image" id="image" placeholder="Logo">
+            <label>Photo du profile</label>
+            <input type="file" class="form-control" name="image" id="image" placeholder="votre photo">
         </div>
-    </div>
-
-    <div class="row mt-4">
-        <div class="form-group col-md-12">
-            <label>Nom de l'entreprise</label>
-            <input type="text" class="form-control" name="nom_entreprise" id="company_name" placeholder="Entrer le nom de l'entreprise">
-        </div>
-    </div>
+    </div> 
     <br>
 <input type="submit" value="Submit" class="btn" style="background-color: #4f868c; color: white; font-size: larger; width: 8rem;">
 </form>

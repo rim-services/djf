@@ -1,7 +1,7 @@
 {% extends 'company_navbar.html' %}
 
-{% block title %}  Liste des travaux {% endblock %}
-{% block job_list %} active {% endblock %}
+{% block title %}  Liste des annonces {% endblock %}
+{% block liste_des_annonces %} active {% endblock %}
 {% block css %}
 {% endblock %}
 {% block body %}
@@ -22,7 +22,7 @@
             <td>{{forloop.counter}}</td>
             <td>{{travail.titre}}</td>
             <td>{{travail.date_creation}}</td>
-            <td><a href="/edit_job/{{travail.id}}/" class="btn"><i class="fa fa-edit"></i></a></td>
+            <td><a href="/modifier_annonce/{{travail.id}}/" class="btn"><i class="fa fa-edit"></i></a></td>
             <td><a href="#" class="btn"><i class="fa fa-trash"></i></a></td>
         </tr>
         {% endfor %}

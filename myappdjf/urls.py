@@ -4,33 +4,36 @@ from myappdjf import views
 
 urlpatterns = [
     path("", views.index, name="index"),
-    # les utilisateurs
-    path("user_login/", views.user_login, name="user_login"),
-    path("signup/", views.signup, name="signup"),
-    path("user_homepage/", views.user_homepage, name="user_homepage"),
-    path("logout/", views.Logout, name="logout"),
-    path("all_jobs/", views.all_jobs, name="all_jobs"),
-    path("job_detail/<int:myid>/", views.job_detail, name="job_detail"),
-    path("job_apply/<int:myid>/", views.job_apply, name="job_apply"),
+    
+    # les administrateurs
+    path("connexion_administrateur/", views.connexion_administrateur, name="connexion_administrateur"),
+    path("liste_chercheurs_emploi/", views.liste_chercheurs_emploi, name="liste_chercheurs_emploi"),
+    path("supprimer_un_chercheur_emploi/<int:myid>/", views.supprimer_un_chercheur_emploi, name="supprimer_un_chercheur_emploi"),
+    path("entreprises_non_confirmer/", views.entreprises_non_confirmer, name="entreprises_non_confirmer"),
+    path("entreprises_confirmer/", views.entreprises_confirmer, name="entreprises_confirmer"),
+    path("entreprises_rejeter/", views.entreprises_rejeter, name="entreprises_rejeter"),
+    path("tous_les_entreprises/", views.tous_les_entreprises, name="tous_les_entreprises"),
+    path("change_status/<int:myid>/", views.change_status, name="change_status"),
+    path("supprimer_entreprise/<int:myid>/", views.supprimer_entreprise, name="supprimer_entreprise"),
+     
+    # les chercheur d'emploi
+    path("connexion_chercheur_emploi/", views.connexion_chercheur_emploi, name="connexion_chercheur_emploi"),
+    path("inscription_chercheur_emploi/", views.inscription_chercheur_emploi, name="inscription_chercheur_emploi"),
+    path("page_home_chercheur_emploi/", views.page_home_chercheur_emploi, name="page_home_chercheur_emploi"),
+    path("deconnecter/", views.deconnecter, name="deconnecter"),
+    path("les_annonces_emploi/", views.les_annonces_emploi, name="les_annonces_emploi"),
+    path("detail_annonce/<int:myid>/", views.detail_annonce, name="detail_annonce"),
+    path("deposer_pour_emploi/<int:myid>/", views.deposer_pour_emploi, name="deposer_pour_emploi"),
 
     # les entreprises
-    path("company_signup/", views.company_signup, name="company_signup"),
-    path("company_login/", views.company_login, name="company_login"),
-    path("company_homepage/", views.company_homepage, name="company_homepage"),
-    path("add_job/", views.add_job, name="add_job"),
-    path("job_list/", views.job_list, name="job_list"),
-    path("edit_job/<int:myid>/", views.edit_job, name="edit_job"),
-    path("company_logo/<int:myid>/", views.company_logo, name="company_logo"),
-    path("all_applicants/", views.all_applicants, name="all_applicants"),
+    path("inscription_entreprise/", views.inscription_entreprise, name="inscription_entreprise"),
+    path("connexion_entreprise/", views.connexion_entreprise, name="connexion_entreprise"),
+    path("page_home_entreprise/", views.page_home_entreprise, name="page_home_entreprise"),
+    path("publier_annonce/", views.publier_annonce, name="publier_annonce"),
+    path("liste_des_annonces/", views.liste_des_annonces, name="liste_des_annonces"),
+    path("modifier_annonce/<int:myid>/", views.modifier_annonce, name="modifier_annonce"),
+    path("logo_entreprise/<int:myid>/", views.logo_entreprise, name="logo_entreprise"),
+    path("les_interesses/", views.les_interesses, name="les_interesses"),
 
-    # les administrateurs
-    path("admin_login/", views.admin_login, name="admin_login"),
-    path("view_applicants/", views.view_applicants, name="view_applicants"),
-    path("delete_applicant/<int:myid>/", views.delete_applicant, name="delete_applicant"),
-    path("pending_companies/", views.pending_companies, name="pending_companies"),
-    path("accepted_companies/", views.accepted_companies, name="accepted_companies"),
-    path("rejected_companies/", views.rejected_companies, name="rejected_companies"),
-    path("all_companies/", views.all_companies, name="all_companies"),
-    path("change_status/<int:myid>/", views.change_status, name="change_status"),
-    path("delete_company/<int:myid>/", views.delete_company, name="delete_company"),
+    
 ]

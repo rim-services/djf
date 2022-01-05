@@ -1,11 +1,9 @@
-{% extends 'company_navbar.html' %}
-
-{% block title %} Profile de l'entreprise {% endblock %}
+{% extends 'user_navbar.html' %}
+{% block title %} Profile de l'utilisateur {% endblock %}
 {% block home %} active {% endblock %}
 {% block css %}
 {% endblock %}
 {% block body %}
-
 <div class="container">
     <div class="row">
         <div class="col-sm-6">
@@ -15,49 +13,41 @@
 
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label>Nom directeur</label>
-                        <input type="text" class="form-control" name="first_name" id="first_name"
-                            value="{{entreprise.user.first_name}}" required>
+                        <label>Nom</label>
+                        <input type="text" class="form-control mt-2" name="first_name" id="first_name"
+                            value="{{c_emploi.user.first_name}}" required>
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Prenom directeur</label>
-                        <input type="text" class="form-control" name="last_name" id="last_name"
-                        value="{{entreprise.user.last_name}}" required>
+                        <label>Prenom</label>
+                        <input type="text" class="form-control mt-2" name="last_name" id="last_name"
+                        value="{{c_emploi.user.last_name}}" required>
                     </div>
                 </div>
 
                 <div class="row mt-4">
                     <div class="form-group col-md-12">
                         <label>Nom d'utilisateur</label>
-                        <input type="text" class="form-control" name="username" id="username"
-                            value="{{entreprise.user.username}}" readonly>
-                    </div>
-                </div>
-
-                <div class="row mt-4">
-                    <div class="form-group col-md-12">
-                        <label>Nom de l'entreprise</label>
-                        <input type="text" class="form-control" name="nom_entreprise" id="company_name"
-                            value="{{entreprise.nom_entreprise}}" readonly>
+                        <input type="text" class="form-control mt-2" name="username" id="username"
+                            value="{{c_emploi.user.username}}" readonly>
                     </div>
                 </div>
 
                 <div class="row mt-4">
                     <div class="form-group col-md-6">
-                        <label>Email</label>
-                        <input type="email" class="form-control" name="email" id="email" value="{{entreprise.user.email}}" required>
+                        <label>Email </label>
+                        <input type="email" class="form-control mt-2" name="email" id="email" value="{{c_emploi.user.email}}" required>
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Numero telephone</label>
-                        <input type="tel" class="form-control" name="telephone" id="phone" value="{{entreprise.telephone}}" required>
+                        <label>Numero telephone </label>
+                        <input type="tel" class="form-control mt-2" name="telephone" id="phone" value="{{c_emploi.telephone}}" required>
                     </div>
                 </div>
 
                 <div class="row mt-4">
                     <div class="form-group col-md-6">
                         <label>Sexe</label>
-                        {% if entreprise.sexe == "Male" %}
-                        <div style="border: 1px solid lightgrey; padding: 5px; border-radius: 6px;">
+                        {% if c_emploi.gender == "Male" %}
+                        <div class="mt-2" style="border: 1px solid lightgrey; padding: 5px; border-radius: 6px;">
                             <div class="form-check form-check-inline">
                                 <input type="radio" class="custom-control-input" name="sexe" value="Male" checked>
                                 <label for="male" class="custom-control-label">Homme</label>
@@ -83,17 +73,17 @@
                         {% endif %}
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Logo de l'entreprise</label>
-                        <input type="file" class="form-control" name="image" id="image">
+                        <label>Profile Photo</label>
+                        <input type="file" class="form-control mt-2" name="image" id="image">
                     </div>
                 </div>
 
-                <input type="submit" value="Submit" class="btn mt-4" style="background-color: #4f868c; color: white; font-size: larger; width: 8rem;">
+                <input type="submit" value="Submit" class="btn mt-4" accept="image/*" style="background-color: #4f868c; color: white; font-size: larger; width: 8rem;">
             </form>
 
         </div>
         <div class="col-sm-4 mt-5 text-center">
-            <img src="{{entreprise.image.url}}" alt="" width="200px" height="200px">
+            <img src="{{c_emploi.image.url}}" alt="" width="200px" height="200px">
         </div>
     </div>
 </div>
@@ -101,9 +91,8 @@
 {% block js %}
 <script>
     {% if alert %}
-    alert("Profile a été modifier avec succées")
-    window.location = "/company_homepage"
+    alert("Le profile a été modifiées avec succées")
+    window.location = "/page_home_chercheur_emploi"
     {% endif %}
 </script>
 {% endblock %}
-

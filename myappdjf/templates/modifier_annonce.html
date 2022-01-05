@@ -1,7 +1,7 @@
 {% extends 'company_navbar.html' %}
 
 {% block title %} Modifier ue annonce {% endblock %}
-{% block application_form %} active {% endblock %}
+{% block travail_form %} active {% endblock %}
 {% block css %}
 {% endblock %}
 {% block body %}
@@ -64,7 +64,7 @@
 <script>
     {% if alert %}
     alert("les données de l'annonce ont ete modifiés avec succées")
-    window.location = "/job_list"
+    window.location = "/liste_des_annonces"
     {% endif %}
 </script>
 {% endblock %}

@@ -46,17 +46,17 @@
             <a class="nav-link {% block home %} {% endblock %}" aria-current="page" href="/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% block user_login %} {% endblock %}" href="/user_login/">chercheur d'emploi</a>
+            <a class="nav-link {% block user_login %} {% endblock %}" href="/connexion_chercheur_emploi/">chercheur d'emploi</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% block admin_login %} {% endblock %}" href="/admin_login/">Administrateur</a>
+            <a class="nav-link {% block admin_login %} {% endblock %}" href="/connexion_administrateur/">Administrateur</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% block company_login %} {% endblock %}" href="/company_login/">Entreprises</a>
+            <a class="nav-link {% block company_login %} {% endblock %}" href="/connexion_entreprise/">Entreprises</a>
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-link active" href="/logout/">Deconnecter</a>
+            <a class="nav-link active" href="/deconnecter/">Deconnecter</a>
           </li>
         </ul>
         {% endif %}

@@ -1,7 +1,7 @@
 {% extends 'admin_navbar.html' %}
 
-{% block title %} Les entreprises approuvé {% endblock %}
-{% block application_form %} active {% endblock %}
+{% block title %} Les entreprises  {% endblock %}
+{% block travail_form %} active {% endblock %}
 {% block css %}
 {% endblock %}
 {% block body %}
@@ -18,9 +18,12 @@
             <th>Image</th>
             <th>Status</th>
             <th>Changee Status</th>
+            <th>Supprimer</th>
+
         </tr>
     </thead>
     <tbody>
+   
         {% for entreprise in entreprises %}
         <tr>
             <td>{{forloop.counter}}</td>
@@ -32,6 +35,7 @@
             <td><img src="{{entreprise.image.url}}" class="rounded-circle" width="90px" height="70px"></td>
             <td>{{entreprise.status}}</td>
             <td><a href="/change_status/{{entreprise.id}}/" class="btn btn-secondary">Changer Status</a></td>
+            <td><a href="/supprimer_entreprise/{{entreprise.user.id}}/" class="btn btn-danger" onclick="return confirm('vous etes sur de vouloir supprimer?')">Delete</a></td>
         </tr>
         {% endfor %}
     </tbody>

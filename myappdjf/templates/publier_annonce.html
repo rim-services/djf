@@ -1,7 +1,7 @@
 {% extends 'company_navbar.html' %}
 
 {% block title %} Ajouter un recrutement {% endblock %}
-{% block add_job %} active {% endblock %}
+{% block publier_annonce %} active {% endblock %}
 {% block css %}
 {% endblock %}
 {% block body %}
@@ -64,7 +64,7 @@
 <script>
     {% if alert %}
     alert("le recrutement a été publier avec succes")
-    window.location = "/job_list"
+    window.location = "/liste_des_annonces"
     {% endif %}
 </script>
 {% endblock %}

@@ -8,7 +8,7 @@
 
 <form method="POST"> {% csrf_token %}
     <div class="container mt-5">
-        <h6>Pas encore inscrit? cliquez ici        <a href="/signup/" type="submit" class="btn" style="background-color: #4f868c; color: white;">Signup</a>
+        <h6>Pas encore inscrit? 3jel 3jen hun taftaf        <a href="/inscription_chercheur_emploi/" type="submit" class="btn" style="background-color: #4f868c; color: white;">Signup</a>
         </h6>
         <div class="mb-3">
             <label for="username" class="form-label"><i style="font-weight: bold;">Nom d'utilisateur</i></label>
@@ -27,8 +27,8 @@
 {% block js %}
 <script>
     {% if thank %}
-    alert("Invalid Credentials. Please try again.");
-    window.location.href = "/user_login"
+    alert("Données invalide, ressayer.");
+    window.location.href = "/connexion_chercheur_emploi"
     {% endif %}
 </script>
 {% endblock %}

@@ -1,14 +1,14 @@
 {% extends 'user_navbar.html' %}
 
 {% block title %} Details du travail {% endblock %}
-{% block job_list %} active {% endblock %}
+{% block liste_des_annonces %} active {% endblock %}
 {% block css %}
 {% endblock %}
 {% block body %}
 <div class="container mt-4 shadow-lg py-3 mb-4">
 <div class="row">
     <div class="col-md-5">
-        <img src="{{job.image.url}}" alt="" width="350px" height="250px">
+        <img src="{{travail.image.url}}" alt="" width="350px" height="250px">
     </div>
     <div class="col-md-6">
         <h2>{{travail.titre}}</h2>
@@ -18,7 +18,7 @@
         <br>
         <strong>Salaire : <i class="fa fa-inr mr-2"></i>₹ {{travail.salaire}}/mois</strong>
         <div class="mt-3">
-            <a href="/job_apply/{{travail.id}}/" class="btn btn-danger">Deposer pour le travail</a>
+            <a href="/deposer_pour_emploi/{{travail.id}}/" class="btn btn-danger">Deposer pour le travail</a>
         </div>
     </div>
 </div>

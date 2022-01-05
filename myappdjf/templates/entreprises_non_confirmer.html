@@ -1,7 +1,7 @@
 {% extends 'admin_navbar.html' %}
 
-{% block title %} All rejected Companies {% endblock %}
-{% block application_form %} active {% endblock %}
+{% block title %} les entreprises non confirmés {% endblock %}
+{% block travail_form %} active {% endblock %}
 {% block css %}
 {% endblock %}
 {% block body %}
@@ -18,11 +18,9 @@
             <th>Image</th>
             <th>Status</th>
             <th>Changee Status</th>
-
         </tr>
     </thead>
     <tbody>
-   
         {% for entreprise in entreprises %}
         <tr>
             <td>{{forloop.counter}}</td>

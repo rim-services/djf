@@ -1,7 +1,7 @@
 {% extends 'user_navbar.html' %}
 
 {% block title %} Listes des annonces des recrutements {% endblock %}
-{% block job_list %} active {% endblock %}
+{% block liste_des_annonces %} active {% endblock %}
 {% block css %}
 {% endblock %}
 {% block body %}
@@ -31,7 +31,7 @@
             {% if travail.id in data %}
             <td><a class="btn btn-success">deposer sur</a></td>
             {% else %}
-            <td><a href="/job_detail/{{job.id}}/" class="btn btn-success">deposer</a></td>
+            <td><a href="/detail_annonce/{{travail.id}}/" class="btn btn-success">deposer</a></td>
             {% endif %}
         </tr>
         {% endfor %}

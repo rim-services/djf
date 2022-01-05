@@ -1,7 +1,7 @@
 {% extends 'company_navbar.html' %}
  
 {% block title %} Approuver une entreprise {% endblock %}
-{% block application_form %} active {% endblock %}
+{% block travail_form %} active {% endblock %}
 {% block css %}
 {% endblock %}
 {% block body %}
@@ -34,7 +34,7 @@
 <script>
     {% if alert %}
     alert("Le logo de l'entreprise a été bien modifiées")
-    window.location = "/job_list"
+    window.location = "/les_annonces_emploi"
     {% endif %}
 </script>
 {% endblock %}

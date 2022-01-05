@@ -19,15 +19,15 @@
 <script>
     {% if alert %}
     alert("le cv a été mis avec succées");
-    document.location = "/all_jobs/"
+    document.location = "/les_annonces_emploi/"
     {% endif %}
     {% if closed %}
     alert("Date de fin a été dépassé ")
-    document.location = "/all_jobs/"
+    document.location = "/les_annonces_emploi/"
     {% endif %}
     {% if notopen %}
     alert("La date du debut n'est pas encore arrivé")
-    document.location = "/all_jobs/"
+    document.location = "/les_annonces_emploi/"
     {% endif %}
 </script>
 {% endblock %}
