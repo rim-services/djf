@@ -1,0 +1,36 @@
+{% extends 'admin_navbar.html' %}
+
+{% block title %} Les interréssés {% endblock %}
+{% block view_applicants %} active {% endblock %}
+{% block css %}
+{% endblock %}
+{% block body %}
+<div class="container mt-4">
+<table class="table table-hover" id="example">
+    <thead>
+        <tr>
+            <th>Numero</th>
+            <th>Nom</th>
+            <th>Email </th>
+            <th>telephone</th>
+            <th>sexe</th>
+            <th>Image</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for d in c_emploi %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{d.user.get_full_name}}</td>
+            <td>{{d.user.email}}</td>
+            <td>{{d.telephone}}</td>
+            <td>{{d.sexe}}</td>
+            <td><img src="{{d.image.url}}" class="rounded-circle" width="90px" height="70px"></td>
+            <td><a href="/delete_applicant/{{d.user.id}}/" class="btn btn-danger" onclick="return confirm('vouler vous supprimer ce candidature?')">supprimer</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

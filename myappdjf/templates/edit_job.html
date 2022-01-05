@@ -1,0 +1,71 @@
+{% extends 'company_navbar.html' %}
+
+{% block title %} Modifier ue annonce {% endblock %}
+{% block application_form %} active {% endblock %}
+{% block css %}
+{% endblock %}
+{% block body %}
+<form class="container mt-3" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="row">
+        <div class="form-group col-md-12">
+            <label>Titre</label>
+            <input type="text" class="form-control mt-1" name="titre" id="job_title" value="{{travail.title}}" required>
+        </div>
+    </div>
+    
+    <div class="row mt-3">
+        <div class="form-group col-md-6">
+            <label>Date debut</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;({{travail.date_debut}})
+            <input type="date" class="form-control mt-1" name="date_debut" id="start_date">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Date fin</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;({{travail.date_fin}})
+            <input type="date" class="form-control mt-1" name="date_fin" id="end_date">
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="form-group col-md-6">
+            <label>Experience (en années)</label>
+            <input type="text" class="form-control mt-1" name="experience" id="experience" value="{{travail.experience}}" required>
+        </div>
+        <div class="form-group col-md-6">
+            <label>Salaire (par mois)</label>
+            <input type="tel" class="form-control mt-1" name="salary" id="salary" value="{{travail.salaire}}" required>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="form-group col-md-12">
+            <label>Skills </label>
+            <input type="text" class="form-control mt-1" name="skills" id="skills" value="{{travail.skills}}" required>
+        </div>
+        </div>
+    
+    <div class="row mt-3">
+        <div class="form-group col-md-12">
+            <label>Adresse entreprise</label>
+            <input type="text" class="form-control mt-1" name="adresse" id="location" value="{{travail.adresse}}" required>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="form-group col-md-12">
+            <label>Description</label>
+            <textarea name="description" id="description" class="form-control mt-1" cols="30" rows="4" required>{{travail.description}}</textarea>
+        </div>
+    </div>
+<input type="submit" value="Submit" class="btn btn-primary mt-2">
+</form>
+{% endblock %}
+{% block js %}
+<script>
+    {% if alert %}
+    alert("les données de l'annonce ont ete modifiés avec succées")
+    window.location = "/job_list"
+    {% endif %}
+</script>
+{% endblock %}
+

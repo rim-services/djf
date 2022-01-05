@@ -1,0 +1,34 @@
+{% extends 'user_navbar.html' %}
+
+{% block title %} envoie du cv {% endblock %}
+{% block job_list %} active {% endblock %}
+{% block css %}
+{% endblock %}
+{% block body %}
+<div class="container mt-4 shadow-lg py-3 mb-4">
+<form method="POST" enctype="multipart/form-data"> {% csrf_token %}
+    <div class="form-row">
+        <label>telecharger le cv</label>
+        <input type="file" class="form-control mt-3" name="cv" id="resume">
+    </div>
+    <input type="submit" value="Submit" class="btn btn-danger mt-3">
+</form>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    {% if alert %}
+    alert("le cv a été mis avec succées");
+    document.location = "/all_jobs/"
+    {% endif %}
+    {% if closed %}
+    alert("Date de fin a été dépassé ")
+    document.location = "/all_jobs/"
+    {% endif %}
+    {% if notopen %}
+    alert("La date du debut n'est pas encore arrivé")
+    document.location = "/all_jobs/"
+    {% endif %}
+</script>
+{% endblock %}
+

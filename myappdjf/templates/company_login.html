@@ -1,0 +1,34 @@
+{% extends 'basic.html' %}
+
+{% block title %} page de connexion de l'Entreprise {% endblock %}
+{% block company_login %} active {% endblock %}
+{% block css %}
+{% endblock %}
+{% block body %}
+<form method="POST"> 
+    {% csrf_token %}
+    <div class="container mt-5">
+        <h6>Pas encore inscrit? 3jel 3jen hun taftaf <a href="/company_signup/" type="submit" class="btn" style="background-color: #4f868c; color: white;">creer un compte</a>
+
+        <div class="mb-3">
+            <label for="username" class="form-label"><i style="font-weight: bold;">Nom d'utilisateur</i></label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Nom d'utilisateur">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label"><i style="font-weight: bold;">Mot de passe</i></label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe">
+        </div>
+        <br>
+        <input type="submit" value="Submit" class="btn" style="background-color: #4f868c; color: white; font-size: larger; width: 8rem;">
+
+    </div>
+</form>
+{% endblock %}
+{% block js %}
+<script>
+    {% if alert %}
+    alert("Données invalide, ressayer");
+    window.location.href = "/company_login"
+    {% endif %}
+</script>
+{% endblock %}

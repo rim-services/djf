@@ -1,0 +1,32 @@
+{% extends 'company_navbar.html' %}
+
+{% block title %}  Liste des travaux {% endblock %}
+{% block job_list %} active {% endblock %}
+{% block css %}
+{% endblock %}
+{% block body %}
+<div class="container mt-4">
+<table class="table table-hover" id="example">
+    <thead>
+        <tr>
+            <th>Numero</th>
+            <th>Titre</th>
+            <th>creer en</th>
+            <th>Action</th>
+            <th>Supprimer</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for travail in travails %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{travail.titre}}</td>
+            <td>{{travail.date_creation}}</td>
+            <td><a href="/edit_job/{{travail.id}}/" class="btn"><i class="fa fa-edit"></i></a></td>
+            <td><a href="#" class="btn"><i class="fa fa-trash"></i></a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}
