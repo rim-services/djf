@@ -6,6 +6,8 @@ from datetime import date
 
 def index(request):
     return render(request, "index.html")
+def index2(request):
+    return render(request, "index2.html")
 
 def connexion_chercheur_emploi(request):
     if request.user.is_authenticated:
