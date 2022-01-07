@@ -3,11 +3,15 @@ from . models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from datetime import date
-
+ 
 def index(request):
     return render(request, "index.html")
-def index2(request):
-    return render(request, "index2.html")
+
+def stat(request):
+    t = Travail.objects.count()
+    e = Entreprise.objects.count()
+    c = C_emploi.objects.count()
+    return render(request, "statistiques.html", {'t':t, 'e':e, 'c':c})
 
 def connexion_chercheur_emploi(request):
     if request.user.is_authenticated:
@@ -23,9 +27,9 @@ def connexion_chercheur_emploi(request):
                 if user1.type == "c_emploi":
                     login(request, user)
                     return redirect("/page_home_chercheur_emploi")
-            else:
-                thank = True
-                return render(request, "connexion_chercheur_emploi.html", {"thank":thank})
+            else:   
+                msg = "Les données sont  erronés, ressayer"
+                return render(request, "connexion_chercheur_emploi.html", {"msg":msg})
     return render(request, "connexion_chercheur_emploi.html")
 
 def page_home_chercheur_emploi(request):
@@ -96,7 +100,8 @@ def les_interesses(request):
 
 def inscription_chercheur_emploi(request):
     if request.method=="POST":   
-        username = request.POST['email']
+        email = request.POST['email']
+        username = request.POST['username']
         first_name=request.POST['first_name']
         last_name=request.POST['last_name']
         password1 = request.POST['password1']
@@ -105,16 +110,18 @@ def inscription_chercheur_emploi(request):
         sexe = request.POST['sexe']
         image = request.FILES['image']
 
-        # if password1 != password2:
-        #     messages.error(request, "Passwords do not match.")
-        #     return redirect('/signup')
+        if password1 != password2:
+            msg = "les mot de passes ne sont pas siyani"
+            return render(request, "inscription_chercheur_emploi.html", {'msg':msg})
         
-        user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, password=password1)
+        user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, password=password1)
         c = C_emploi.objects.create(user=user, telephone=telephon, sexe=sexe, image=image, type="c_emploi")
         user.save()
         c.save()
-        return render(request, "connexion_chercheur_emploi.html")
-    return render(request, "inscription_chercheur_emploi.html")
+        msg9 = "inscription faite avec succées, vous pouvez se connecter maintenant"
+        return render(request, "connexion_chercheur_emploi.html", {'msg9':msg9})
+    msg = "Désolé, veillez ressayer"
+    return render(request, "inscription_chercheur_emploi.html", {'msg2':msg})
 
 def inscription_entreprise(request):
     if request.method=="POST":   
@@ -149,15 +156,21 @@ def connexion_entreprise(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
-
+        
         if user is not None:
             user1 = Entreprise.objects.get(user=user)
-            if user1.type == "entreprise" and user1.status != "non_confirmer":
+            if user1.type == "entreprise" and user1.status == "Accepted":
                 login(request, user)
                 return redirect("/page_home_entreprise")
-        else:
-            alert = True
-            return render(request, "connexion_entreprise.html", {"alert":alert})
+            elif user1.type == "entreprise" and user1.status == "non_confirmer":
+                msg2 = "Votre entreprise a besoin de confirmation, veuillez patientez"
+                return render(request, "connexion_entreprise.html", {"msg2":msg2})
+            elif user1.type == "entreprise" and user1.status == "Rejected":
+                msg2 = "Votre entreprise a été rejeté."
+                return render(request, "connexion_entreprise.html", {"msg2":msg2})
+        else:   
+            msg = "Les données sont  erronés, ressayer"
+            return render(request, "connexion_entreprise.html", {"msg":msg})
     return render(request, "connexion_entreprise.html")
 
 def page_home_entreprise(request):
@@ -269,12 +282,13 @@ def connexion_administrateur(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
-        if user.is_superuser:
-            login(request, user)
-            return redirect("/tous_les_entreprises")
-        else:
-            alert = True
-            return render(request, "connexion_administrateur.html", {"alert":alert})
+        if user is not None:
+            if user.is_superuser:
+                login(request, user)
+                return redirect("/stat")
+        else:   
+            msg = "Les données sont  erronés,ressayer"
+            return render(request, "connexion_administrateur.html", {"msg":msg})
     return render(request, "connexion_administrateur.html")
 
 def liste_chercheurs_emploi(request):

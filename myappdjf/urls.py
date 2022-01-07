@@ -5,6 +5,7 @@ from myappdjf import views
 urlpatterns = [
     path("", views.index, name="index"),
     
+    
     # les administrateurs
     path("connexion_administrateur/", views.connexion_administrateur, name="connexion_administrateur"),
     path("liste_chercheurs_emploi/", views.liste_chercheurs_emploi, name="liste_chercheurs_emploi"),
@@ -15,6 +16,7 @@ urlpatterns = [
     path("tous_les_entreprises/", views.tous_les_entreprises, name="tous_les_entreprises"),
     path("change_status/<int:myid>/", views.change_status, name="change_status"),
     path("supprimer_entreprise/<int:myid>/", views.supprimer_entreprise, name="supprimer_entreprise"),
+    path("stat/", views.stat, name="stat"),
      
     # les chercheur d'emploi
     path("connexion_chercheur_emploi/", views.connexion_chercheur_emploi, name="connexion_chercheur_emploi"),

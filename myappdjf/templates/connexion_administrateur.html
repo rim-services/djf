@@ -9,6 +9,9 @@
     {% csrf_token %}
     <div class="container mt-5">
         <div class="mb-3">
+            <label for="username" class="form-label"><i style="font-weight: bold;"> <h4 style="color: red;"> {{ msg }} </h4></i></label>
+       </div>
+        <div class="mb-3">
             <label for="username" class="form-label"><i style="font-weight: bold;">Nom d'utilisateur</i></label>
             <input type="text" class="form-control" id="username" name="username" placeholder="Entrer le nom d'utilisateur">
         </div>
@@ -18,6 +21,8 @@
         </div>
         <br>
         <input type="submit" value="Submit" class="btn" style="background-color: #4f868c; color: white; font-size: larger; width: 8rem;">
+        <br><br>
+        
     </div>
 </form>
 {% endblock %}
