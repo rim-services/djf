@@ -13,7 +13,7 @@ def stat(request):
     c = C_emploi.objects.count()
     return render(request, "statistiques.html", {'t':t, 'e':e, 'c':c})
 
-def connexion_chercheur_emploi(request):
+def connexion_chercheur_emploi(request): 
     if request.user.is_authenticated:
         return redirect("/")
     else:
@@ -118,8 +118,8 @@ def inscription_chercheur_emploi(request):
         c = C_emploi.objects.create(user=user, telephone=telephon, sexe=sexe, image=image, type="c_emploi")
         user.save()
         c.save()
-        msg9 = "inscription faite avec succées, vous pouvez se connecter maintenant"
-        return render(request, "connexion_chercheur_emploi.html", {'msg9':msg9})
+        msg = "inscription faite avec succées, vous pouvez se connecter maintenant"
+        return render(request, "connexion_chercheur_emploi.html", {'msg':msg})
     msg = "Désolé, veillez ressayer"
     return render(request, "inscription_chercheur_emploi.html", {'msg2':msg})
 
@@ -291,6 +291,10 @@ def connexion_administrateur(request):
             return render(request, "connexion_administrateur.html", {"msg":msg})
     return render(request, "connexion_administrateur.html")
 
+
+def rien(request):
+    
+    return render(request, "cnx_admin.html")
 def liste_chercheurs_emploi(request):
     if not request.user.is_authenticated:
         return redirect("/connexion_administrateur")
@@ -346,3 +350,7 @@ def supprimer_entreprise(request, myid):
     entreprise = User.objects.filter(id=myid)
     entreprise.delete()
     return redirect("/tous_les_entreprises")
+
+def freelancerHomePage(request):
+    
+    return render(request, "freelancer/freelancer.html")

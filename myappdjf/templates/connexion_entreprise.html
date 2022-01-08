@@ -1,33 +1,54 @@
-{% extends 'basic.html' %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion Entreprise</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet" href="{% static 'login/style.css' %}"> 
 
-{% block title %} page de connexion de l'Entreprise {% endblock %}
-{% block company_login %} active {% endblock %}
-{% block css %}
-{% endblock %}
-{% block body %}
-<form method="POST"> 
-    {% csrf_token %}
-    <div class="container mt-5">
-        <h6>Pas encore inscrit? 3jel 3jen hun taftaf <a href="/inscription_entreprise/" type="submit" class="btn" style="background-color: #4f868c; color: white;">creer un compte</a>
-        <div class="mb-3">
-            <label for="username" class="form-label"><i style="font-weight: bold;"> <h4 style="color: red;"> {{ msg }} </h4></i></label>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="logo text-center">
+    <h1>Bievenue</h1>
+</div>
+<div class="wrapper">
+    <div class="inner-warpper text-center">
+    <h2 class="title">Connexion entreprise</h2>
+    <h5 style="color: red;"> {{ msg  }} </h5>
+    <form action="" method="POST" id="formvalidate">
+        {% csrf_token %}
+        <div class="input-group">
+        
+        <input class="form-control" name="username"  type="text" placeholder="Entrer le nom d'utilisateur" />
+        <span class="lighting"></span>
         </div>
-        <div class="mb-3">
-            <label for="username" class="form-label"><i style="font-weight: bold;">Nom d'utilisateur</i></label>
-            <input type="text" class="form-control" id="username" name="username" placeholder="Nom d'utilisateur">
+        <div class="input-group">
+        <input class="form-control" name="password"  type="password" placeholder="Entrer le mot de passe" />
+        <span class="lighting"></span>
         </div>
-        <div class="mb-3">
-            <label for="password" class="form-label"><i style="font-weight: bold;">Mot de passe</i></label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe">
+
+        <button type="submit" value="Submit" >Connecter</button>
+        <div class="clearfix supporter">
+        <div class="pull-left remember-me">
+            <input id="rememberMe" type="checkbox">
+            <label for="rememberMe">Me souvien</label>
         </div>
-        <br>
-        <input type="submit" value="Submit" class="btn" style="background-color: #4f868c; color: white; font-size: larger; width: 8rem;">
-        <div class="mb-3">
-            <label for="username" class="form-label"><i style="font-weight: bold;"> <h4 style="color: green;"> {{ msg2 }} </h4></i></label>
+        <a class="forgot pull-right" href="#">Mot de passe oublié</a>
         </div>
+    </form>
     </div>
-</form>
-{% endblock %}
-{% block js %}
+    <div class="signup-wrapper text-center">
+    <a href="/inscription_entreprise/">Pas encore inscrit? <span class="text-primary">3jel 3jen hun taftaf</span></a>
+    
+    </div>
+</div>
 
-{% endblock %}
+
+<!-- partial -->
+    <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>        

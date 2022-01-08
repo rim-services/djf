@@ -48,3 +48,31 @@ class Deposer(models.Model):
 
     def __str__ (self):
         return str(self.c_emploi)
+
+class LangueMaitrise(models.Model):
+    c_emploi = models.ForeignKey(C_emploi, on_delete=models.CASCADE)
+    nom = models.CharField(max_length=200)
+    niveau = models.CharField(max_length=400)
+    
+    def __str__ (self):
+        return self.nom
+
+class Visiteur(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    def __str__ (self):
+        return self.user
+    
+class Notes(models.Model):
+    c_emploi = models.ForeignKey(C_emploi, on_delete=models.CASCADE)
+    visiteur = models.ForeignKey(Visiteur, on_delete=models.CASCADE)
+    note = models.IntegerField()
+    
+    def __str__ (self):
+        return self.c_emploi
+
+class AnnoncesEpingles(models.Model):
+    travail = models.ForeignKey(Travail, on_delete=models.CASCADE)
+    
+    def __str__ (self):
+        return self.travail

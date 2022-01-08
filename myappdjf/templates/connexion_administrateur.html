@@ -1,4 +1,61 @@
-{% extends 'basic.html' %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Connexion administrateur</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet" href="{% static 'login/style.css' %}"> 
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="logo text-center">
+  <h1>Bievenue</h1>
+</div>
+<div class="wrapper">
+  <div class="inner-warpper text-center">
+    <h2 class="title">Connexion admin</h2>
+    <h5 style="color: red;"> {{ msg }} </h5>
+    <form action="" method="POST" id="formvalidate">
+        {% csrf_token %}
+      <div class="input-group">
+        
+        <input class="form-control" name="username"  type="text" placeholder="Entrer le nom d'utilisateur" />
+        <span class="lighting"></span>
+      </div>
+      <div class="input-group">
+        <input class="form-control" name="password"  type="password" placeholder="Entrer le mot de passe" />
+        <span class="lighting"></span>
+      </div>
+
+      <button type="submit" value="Submit" >Connecter</button>
+      <div class="clearfix supporter">
+        <div class="pull-left remember-me">
+          <input id="rememberMe" type="checkbox">
+          <label for="rememberMe">Me souvien</label>
+        </div>
+        <a class="forgot pull-right" href="#">Mot de passe oublié</a>
+      </div>
+    </form>
+  </div>
+  <div class="signup-wrapper text-center">
+    <a href="#">Don't have an accout? <span class="text-primary">Create One</span></a>
+  </div>
+</div>
+
+
+<!-- partial -->
+  <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>
+
+
+
+
+{% comment %} {% extends 'basic.html' %}
 
 {% block title %} page de connexion pour administrateur {% endblock %}
 {% block admin_login %} active {% endblock %}
@@ -22,15 +79,10 @@
         <br>
         <input type="submit" value="Submit" class="btn" style="background-color: #4f868c; color: white; font-size: larger; width: 8rem;">
         <br><br>
-        
+         
     </div>
 </form>
 {% endblock %}
 {% block js %}
-<script>
-    {% if alert %}
-    alert("Données invalide, ressayer.");
-    window.location.href = "/connexion_administrateur"
-    {% endif %}
-</script>
-{% endblock %}
+
+{% endblock %} {% endcomment %}

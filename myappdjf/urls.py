@@ -5,9 +5,9 @@ from myappdjf import views
 urlpatterns = [
     path("", views.index, name="index"),
     
-    
     # les administrateurs
     path("connexion_administrateur/", views.connexion_administrateur, name="connexion_administrateur"),
+    path("rien/", views.rien, name="rien"),
     path("liste_chercheurs_emploi/", views.liste_chercheurs_emploi, name="liste_chercheurs_emploi"),
     path("supprimer_un_chercheur_emploi/<int:myid>/", views.supprimer_un_chercheur_emploi, name="supprimer_un_chercheur_emploi"),
     path("entreprises_non_confirmer/", views.entreprises_non_confirmer, name="entreprises_non_confirmer"),
@@ -37,5 +37,7 @@ urlpatterns = [
     path("logo_entreprise/<int:myid>/", views.logo_entreprise, name="logo_entreprise"),
     path("les_interesses/", views.les_interesses, name="les_interesses"),
 
+    # les visiteurs
+    path("freelancer/", views.freelancerHomePage, name="freelancer"),
     
 ]
