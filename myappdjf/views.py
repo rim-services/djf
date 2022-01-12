@@ -42,12 +42,15 @@ def page_home_chercheur_emploi(request):
         last_name=request.POST['last_name']
         telephone = request.POST['telephone']
         sexe = request.POST['sexe']
+        description = request.POST['description']
 
         c_emploi.user.email = email
         c_emploi.user.first_name = first_name
         c_emploi.user.last_name = last_name
         c_emploi.phone = telephone
         c_emploi.gender = sexe
+        c_emploi.description = description
+        
         c_emploi.save()
         c_emploi.user.save()
         try:
@@ -109,13 +112,18 @@ def inscription_chercheur_emploi(request):
         telephon = request.POST['telephone']
         sexe = request.POST['sexe']
         image = request.FILES['image']
+        experience = request.POST['experience']
+        adresse = request.POST['adresse']
+        skills = request.POST['skills']
+        description = request.POST['description']
+        
 
         if password1 != password2:
             msg = "les mot de passes ne sont pas siyani"
             return render(request, "inscription_chercheur_emploi.html", {'msg':msg})
         
         user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, password=password1)
-        c = C_emploi.objects.create(user=user, telephone=telephon, sexe=sexe, image=image, type="c_emploi")
+        c = C_emploi.objects.create(user=user, telephone=telephon, sexe=sexe, image=image, type="c_emploi",experience=experience, adresse=adresse, skills=skills, description=description)
         user.save()
         c.save()
         msg = "inscription faite avec succées, vous pouvez se connecter maintenant"
@@ -352,5 +360,5 @@ def supprimer_entreprise(request, myid):
     return redirect("/tous_les_entreprises")
 
 def freelancerHomePage(request):
-    
-    return render(request, "freelancer/freelancer.html")
+    c_emplois = C_emploi.objects.all()
+    return render(request, "freelancer/freelancer.html", {'c_emplois':c_emplois})

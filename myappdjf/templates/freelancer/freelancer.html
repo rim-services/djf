@@ -9,6 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="manifest" href="site.webmanifest">
 		<link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}">
+        <link rel="stylesheet" href="{% static 'cssFreelancerTem.css' %}">
         
 		<!-- CSS here -->
             <link rel="stylesheet" href="">
@@ -77,9 +78,56 @@
 
    {% comment %}  rechercher ici {% endcomment %}
 
+    {% comment %} les cartes dans lesquelles nous avons les informations dans devellopeur {% endcomment %}
+        
+    <div class="team-boxed">
+        <div class="container">
+            <div class="intro">
+                <h2 class="text-center">C'est comment? </h2>
+                <p class="text-center">Lors que vous selectionné votre freelancer, vous pouvez lui contacter sur son email, numéro téléphone ou whatsapp.</p>
+            </div>
+            <div class="row people">
+            {% for c in c_emplois %}
+                <div class="col-md-6 col-lg-6 item">
+                    <div class="box"><img class="rounded-circle" src="{{c.image.url}}">
 
-
-
+                        <h3 class="name">{{c.user.first_name}} {{c.user.last_name}}</h3>
+                        <p class="title">{{c.user.email}} </p>
+                        <p class="description"> {{c.description}} </p>
+                        <div class="social"><a href="#"><i class="fa fa-facebook-official"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-instagram"></i></a></div>
+                    </div>
+                </div>
+    
+            {% endfor %}
+                {% comment %} <div class="col-md-6 col-lg-4 item">
+                    <div class="box"><img class="rounded-circle" src="{% static 'assets/img/logo/newlogo.png' %}">
+                        <h3 class="name">Emily Clark</h3>
+                        <p class="title">Artist</p>
+                        <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, et interdum justo suscipit id. Etiam dictum feugiat tellus, a semper massa. </p>
+                        <div class="social"><a href="#"><i class="fa fa-facebook-official"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-instagram"></i></a></div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 item">
+                    <div class="box"><img class="rounded-circle" src="{% static 'assets/img/logo/newlogo.png' %}">
+                        <h3 class="name">Carl Kent</h3>
+                        <p class="title">Stylist</p>
+                        <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, et interdum justo suscipit id. Etiam dictum feugiat tellus, a semper massa. </p>
+                        <div class="social"><a href="#"><i class="fa fa-facebook-official"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-instagram"></i></a></div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 item">
+                    <div class="box"><img class="rounded-circle" src="{% static 'assets/img/logo/newlogo.png' %}">
+                        <h3 class="name">Carl Kent</h3>
+                        <p class="title">Stylist</p>
+                        <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, et interdum justo suscipit id. Etiam dictum feugiat tellus, a semper massa. </p>
+                        <div class="social"><a href="#"><i class="fa fa-facebook-official"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-instagram"></i></a></div>
+                    </div>
+                </div> {% endcomment %}
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
 
 
 

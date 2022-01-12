@@ -40,13 +40,28 @@
     </div>
 
     <div class="row mt-4">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-4">
             <label>Email </label>
             <input type="email" class="form-control" name="email" id="email" placeholder="Entrer votre email" required>
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-4">
             <label>numero telephone</label>
             <input type="tel" class="form-control" name="telephone" id="phone" placeholder="Entrer le numero du telephone" pattern="\d*"  title="seulement les numéros" minlength="8" required>
+        </div>
+        <div class="form-group col-md-4">
+            <label>Experience (en années)</label>
+            <input type="text" class="form-control" name="experience" id="experience" placeholder="Experience required (in years)" required>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="form-group col-md-6">
+            <label>Skills </label>
+            <input type="text" class="form-control" name="skills" id="skills" placeholder="les skills obligatoires" required>
+        </div>
+        
+        <div class="form-group col-md-6">
+            <label>adresse</label>
+            <input type="text" class="form-control" name="adresse" id="location" placeholder="Entrer l'adresse" required>
         </div>
     </div>
 
@@ -69,6 +84,14 @@
             <input type="file" class="form-control" name="image" id="image" placeholder="votre photo">
         </div>
     </div> 
+
+
+    <div class="row mt-3">
+        <div class="form-group col-md-12">
+            <label>Description</label>
+           <textarea name="description" id="description" class="form-control" cols="30" rows="4" placeholder="la description doit etre detaillées" required></textarea>
+        </div>
+    </div>
     <br>
 <input type="submit" value="Submit" class="btn" style="background-color: #4f868c; color: white; font-size: larger; width: 8rem;">
 </form>

@@ -77,6 +77,21 @@
                         <input type="file" class="form-control mt-2" name="image" id="image">
                     </div>
                 </div>
+                <div class="row mt-4">
+                    <div class="form-group col-md-12">
+                        <label>Description</label>
+                        <textarea type="text" class="form-control mt-2" name="description" id="description"
+                             value="{{c_emploi.description}}"> </textarea>
+                             
+                    </div>
+                </div>
+                {% comment %} <div class="row mt-4">
+                    <div class="form-group col-md-12">
+                        <label>Description</label>
+                       <textarea type="text" name="description" id="description" class="form-control" cols="30" rows="4"
+                         value="{{c_emploi.description}}" readonly ></textarea>
+                    </div>
+                </div> {% endcomment %}
 
                 <input type="submit" value="Submit" class="btn mt-4" accept="image/*" style="background-color: #4f868c; color: white; font-size: larger; width: 8rem;">
             </form>
