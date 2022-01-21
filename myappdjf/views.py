@@ -3,6 +3,7 @@ from . models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from datetime import date
+
  
 def index(request):
     return render(request, "index.html")
@@ -15,7 +16,7 @@ def stat(request):
 
 def connexion_chercheur_emploi(request): 
     if request.user.is_authenticated:
-        return redirect("/")
+        return redirect("/page_home_chercheur_emploi")
     else:
         if request.method == "POST":
             username = request.POST['username']
