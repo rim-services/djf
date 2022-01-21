@@ -4,6 +4,7 @@ from myappdjf import views
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("scrapp/", views.scrapp, name="scrapp"),
     
     # les administrateurs
     path("connexion_administrateur/", views.connexion_administrateur, name="connexion_administrateur"),

@@ -1,10 +1,38 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from . models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from datetime import date
 
- 
+from selenium import webdriver
+from bs4 import BeautifulSoup
+import time
+driver = webdriver.Chrome( executable_path='chromedriver.exe')
+import pandas as pd
+import re
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+
+def scrapp(request):
+    # browser=webdriver.Chrome("chromedriver.exe")
+    # browser.get("https://www.linkedin.com")
+    # username = browser.find_element_by_id("session_key")
+    # username.send_keys("mbeirouck@gmail.com")
+    # password = browser.find_element_by_id("session_password")
+    # password.send_keys("medbeirouck31236565")
+    # login_button=browser.find_element_by_class_name("btn__primary--large from__button--floating")
+    # login_button.click()
+    # browser.get("https://www.linkedin.com/jobs/search?keywords=Backend&location=%C3%89tats-Unis&position=1&pageNum=0")
+    # jobs=browser.find_elements_by_class_name("base-search-card__title")
+    # c=[]
+    # for i in jobs:
+    #     c.append(i.text)
+    # time.sleep(5)
+    # browser.close() 
+    return render(request, "jobscrapped.html")
+
+
 def index(request):
     return render(request, "index.html")
 
@@ -71,7 +99,29 @@ def les_annonces_emploi(request):
     data = []
     for i in deposer:
         data.append(i.travail.id)
-    return render(request, "les_annonces_emploi.html", {'travail':travail, 'data':data})
+    
+    # key = 'full%20stack%20develloper'
+    # url = 'https://www.linkedin.com/jobs/search?keywords='+key+'&position=1&pageNum=0'
+    # driver.get(url)
+    # src = driver.page_source
+    # soup = BeautifulSoup(src, 'lxml')
+    # contents = soup.find('li')
+    browser=webdriver.Chrome("chromedriver.exe")
+    # browser.get("https://www.linkedin.com")
+    # username = browser.find_element_by_id("session_key")
+    # username.send_keys("mbeirouck@gmail.com")
+    # password = browser.find_element_by_id("session_password")
+    # password.send_keys("medbeirouck31236565")
+    # login_button=browser.find_element_by_class_name("btn__primary--large from__button--floating")
+    # login_button.click()
+    browser.get("https://www.linkedin.com/jobs/search?keywords=Backend&location=%C3%89tats-Unis&position=1&pageNum=0")
+    jobs=browser.find_elements_by_class_name("base-search-card__title")
+    c=[]
+    for i in jobs:
+        c.append(i.text)
+    time.sleep(5)
+    browser.close() 
+    return render(request, "les_annonces_emploi.html", {'travail':travail, 'data':data, 'c':c})
 
 def detail_annonce(request, myid):
     travail = Travail.objects.get(id=myid)

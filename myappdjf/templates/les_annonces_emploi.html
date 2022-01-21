@@ -35,6 +35,14 @@
             {% endif %}
         </tr>
         {% endfor %}
+        {% for cc in c %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{cc}}</td>
+            
+        </tr>
+        {% endfor %} 
+    
     </tbody>
 </table>
 </div>
