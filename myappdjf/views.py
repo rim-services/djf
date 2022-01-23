@@ -4,6 +4,7 @@ from . models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from datetime import date
+from itertools import islice
 
 from selenium import webdriver
 from bs4 import BeautifulSoup
@@ -15,22 +16,17 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 def scrapp(request):
-    # browser=webdriver.Chrome("chromedriver.exe")
-    # browser.get("https://www.linkedin.com")
-    # username = browser.find_element_by_id("session_key")
-    # username.send_keys("mbeirouck@gmail.com")
-    # password = browser.find_element_by_id("session_password")
-    # password.send_keys("medbeirouck31236565")
-    # login_button=browser.find_element_by_class_name("btn__primary--large from__button--floating")
-    # login_button.click()
-    # browser.get("https://www.linkedin.com/jobs/search?keywords=Backend&location=%C3%89tats-Unis&position=1&pageNum=0")
-    # jobs=browser.find_elements_by_class_name("base-search-card__title")
-    # c=[]
-    # for i in jobs:
-    #     c.append(i.text)
-    # time.sleep(5)
-    # browser.close() 
-    return render(request, "jobscrapped.html")
+    
+    list=[[1,2,3],["med","sidi","ali"],["brk","psidi","pali"]]
+    listjobs=[]
+    for item in range(0,len(list[0])):
+        singlejob=[]
+        singlejob.append(list[0][item])
+        singlejob.append(list[1][item])
+        singlejob.append(list[2][item])
+        listjobs.append(singlejob)
+        
+    return render(request, "jobscrapped.html",{'listjobs':listjobs})
 
 
 def index(request):
@@ -115,13 +111,45 @@ def les_annonces_emploi(request):
     # login_button=browser.find_element_by_class_name("btn__primary--large from__button--floating")
     # login_button.click()
     browser.get("https://www.linkedin.com/jobs/search?keywords=Backend&location=%C3%89tats-Unis&position=1&pageNum=0")
-    jobs=browser.find_elements_by_class_name("base-search-card__title")
-    c=[]
-    for i in jobs:
-        c.append(i.text)
+    jobs_titres=browser.find_elements_by_class_name("base-search-card__title")
+    tt=[] 
+    iterator = islice(jobs_titres, 10)
+    for i in iterator:
+        tt.append(i.text)
+    
+    jobs_entreprises=browser.find_elements_by_class_name("base-search-card__subtitle")
+    ne=[]
+    iterator = islice(jobs_entreprises, 10)
+    for i in iterator:
+        ne.append(i.text)
+    
+    jobs_adresses=browser.find_elements_by_class_name("job-search-card__location")
+    ja=[]
+    iterator = islice(jobs_adresses, 10)
+    for i in iterator:
+        ja.append(i.text)
+    jobs_date=browser.find_elements_by_tag_name("time")
+    # jobs_date=browser.find_elements_by_class_name("job-search-card__listdate--new job-search-card__listdate")
+    jd=[]  
+    iterator = islice(jobs_date, 10)
+    for i in iterator:
+        jd.append(i.text)
+        
+   
+    jobss=[ne,tt,ja,jd]
+    listjobs=[]
+    for item in range(0,len(jobss[3])):
+        singlejob=[]
+        singlejob.append(jobss[0][item])
+        singlejob.append(jobss[1][item])
+        singlejob.append(jobss[2][item])
+        singlejob.append(jobss[3][item])
+        listjobs.append(singlejob)
+      
+    
     time.sleep(5)
     browser.close() 
-    return render(request, "les_annonces_emploi.html", {'travail':travail, 'data':data, 'c':c})
+    return render(request, "les_annonces_emploi.html", {'travail':travail, 'data':data, 'listjobs':listjobs})
 
 def detail_annonce(request, myid):
     travail = Travail.objects.get(id=myid)

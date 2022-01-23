@@ -35,14 +35,18 @@
             {% endif %}
         </tr>
         {% endfor %}
-        {% for cc in c %}
+
+        {% for item in listjobs %}
         <tr>
             <td>{{forloop.counter}}</td>
-            <td>{{cc}}</td>
-            
+            <td>{{ item.0 }}</td>
+            <td>{{ item.1 }}</td>
+            <td>Non determiné</td>
+            <td>{{ item.2 }}</td>
+            <td>{{ item.3 }}</td>
+            <td><a class="btn btn-success">Linkedin</a></td>
         </tr>
         {% endfor %} 
-    
     </tbody>
 </table>
 </div>
