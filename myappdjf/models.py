@@ -75,8 +75,10 @@ class Notes(models.Model):
     def __str__ (self):
         return self.c_emploi
 
-class AnnoncesEpingles(models.Model):
-    travail = models.ForeignKey(Travail, on_delete=models.CASCADE)
+class Langue(models.Model):
+    nom = models.CharField(max_length=100, default="", editable=False)
+    utilite = models.CharField(max_length=15)
+    description = models.TextField(max_length=400, default="", editable=False)
     
     def __str__ (self):
-        return self.travail
+        return self.nom

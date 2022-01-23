@@ -5,14 +5,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from datetime import date
 from itertools import islice
-
 from selenium import webdriver
-from bs4 import BeautifulSoup
 import time
-driver = webdriver.Chrome( executable_path='chromedriver.exe')
-import pandas as pd
-import re
-from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 def scrapp(request):
@@ -27,7 +21,6 @@ def scrapp(request):
         listjobs.append(singlejob)
         
     return render(request, "jobscrapped.html",{'listjobs':listjobs})
-
 
 def index(request):
     return render(request, "index.html")
