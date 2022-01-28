@@ -111,11 +111,10 @@ def les_annonces_emploi(request):
         tt.append(i.text)
     
     jobs_entreprises=browser.find_elements_by_class_name("base-search-card__subtitle")
-    ne=[]
+    ne=[] 
     iterator = islice(jobs_entreprises, 10)
     for i in iterator:
         ne.append(i.text)
-    
     jobs_adresses=browser.find_elements_by_class_name("job-search-card__location")
     ja=[]
     iterator = islice(jobs_adresses, 10)
@@ -138,8 +137,6 @@ def les_annonces_emploi(request):
         singlejob.append(jobss[2][item])
         singlejob.append(jobss[3][item])
         listjobs.append(singlejob)
-      
-    
     time.sleep(5)
     browser.close() 
     return render(request, "les_annonces_emploi.html", {'travail':travail, 'data':data, 'listjobs':listjobs})

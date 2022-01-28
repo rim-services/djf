@@ -48,22 +48,21 @@
                         <label>Sexe</label>
                         {% if c_emploi.gender == "Male" %}
                         <div class="mt-2" style="border: 1px solid lightgrey; padding: 5px; border-radius: 6px;">
-                            <div class="form-check form-check-inline">
+                            {% comment %} <div class="form-check form-check-inline">
                                 <input type="radio" class="custom-control-input" name="sexe" value="Male" checked>
                                 <label for="male" class="custom-control-label">Homme</label>
-                            </div>
+                            </div> {% endcomment %}
                             <div class="form-check form-check-inline">
-                                <input type="radio" class="custom-control-input" name="sexe"
-                                    value="Female">
+                                <input type="radio" class="custom-control-input" name="sexe" value="Female">
                                 <label for="female" class="custom-control-label">Femme</label>
                             </div>
                         </div>
                         {% else %}
                         <div style="border: 1px solid lightgrey; padding: 5px; border-radius: 6px;">
-                            <div class="form-check form-check-inline">
+                            {% comment %} <div class="form-check form-check-inline">
                                 <input type="radio" class="custom-control-input" name="sexe" value="Male">
                                 <label for="male" class="custom-control-label">Homme</label>
-                            </div>
+                            </div> {% endcomment %}
                             <div class="form-check form-check-inline">
                                 <input type="radio" class="custom-control-input" name="sexe"
                                     value="Female" checked>
@@ -93,7 +92,7 @@
                     </div>
                 </div> {% endcomment %}
 
-                <input type="submit" value="Submit" class="btn mt-4" accept="image/*" style="background-color: #4f868c; color: white; font-size: larger; width: 8rem;">
+                <input type="submit" value="Submit" class="btn btn-success"  ">
             </form>
 
         </div>
