@@ -79,28 +79,26 @@
        
         <!-- Header End -->
     </header>
-    <main>
-     
-
-    {% comment %} les cartes dans lesquelles nous avons les informations dans devellopeur {% endcomment %}
-        
+    
+       
     <div class="team-boxed">
         <div class="container">
             <div class="intro">
-                <h2 class="text-center">C'est comment? </h2>
+                <h4 class="text-center">C'est comment? </h4>
                 <p class="text-center">Lors que vous selectionné votre freelancer, vous pouvez lui contacter sur son email, numéro téléphone ou whatsapp.</p>
             </div>
                
             <section class="search-sec">
             <div class="container">
-                <form action="#" method="post" novalidate="novalidate">
+                <form  action="" method="POST" novalidate="novalidate">
+                    {% csrf_token %}
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="row">
-                                <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                                    <input type="text" class="form-control search-slt" placeholder="Langue ou mot clé">
+                                <div class="col-lg-5 col-md-3 col-sm-12 p-0">
+                                    <input type="text" name="motcle" class="form-control search-slt" placeholder="Langue ou mot clé">
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                                <div class="col-lg-5 col-md-3 col-sm-12 p-0">
                                     <select class="form-control search-slt">
                                         <option>choisir le classement</option>
         <!--                               4 stars and up -->
@@ -121,8 +119,9 @@
                                         </option>
                                     </select>
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-sm-12 p-0">
-                                    <button type="button" class="btn btn-succes">Chercher</button>
+                                <div class="col-lg-2 col-md-4 ">
+                                    {% comment %} <button type="button" class="btn btn-succes">Chercher</button> {% endcomment %}
+                                    <button type="submit" value="Submit" style="background-color:green; height:50px; width:150px">Chercher</button>
                                 </div>
                             </div>
                         </div>
@@ -130,15 +129,20 @@
                 </form>
             </div>
             </section>
-            <div class="row people">
+            <div class="row people" id="function1">
             {% for c in c_emplois %}
                 <div class="col-md-6 col-lg-6 item">
                     <div class="box"><img class="rounded-circle" src="{{c.image.url}}">
-
                         <h3 class="name">{{c.user.first_name}} {{c.user.last_name}}</h3>
-                        <p class="title">{{c.user.email}} </p>
-                        <p class="description"> {{c.description}} </p>
-                        <div class="social"><a href="#"><i class="fa fa-facebook-official"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-instagram"></i></a></div>
+                        <p style="color:black;" class="title">{{c.user.email}} </p>
+                        <p style="color:black;" class="description"> {{c.description}} </p>
+                        <p style="color:black;" class="description"> {{c.experience}} ans d'experience </p>
+                        <p style="color:black;" class="description"> {{c.telephone}} </p>
+                        <div class="col-lg-2 col-md-4 ">
+                           
+                            {% comment %} <button type="submit" value="Submit" style="background-color:green; height:50px; width:150px">Détails</button> {% endcomment %}
+                            <a href="/detailfreelancer/{{c.id}}" class="btn btn-success"> Détails</a>
+                        </div> 
                     </div>
                 </div>
      
@@ -290,13 +294,13 @@
         <div class="container">
             <div class="footer-border">
                  <div class="row d-flex justify-content-between align-items-center">
-                     <div class="col-xl-10 col-lg-10 ">
+                     {% comment %} <div class="col-xl-10 col-lg-10 ">
                          <div class="footer-copy-right">
                              <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib  </a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --><h3 style="color: green;"> Modifié par moi(Mohamed Beirouk), pour qu'elle ressemble mon sitweb</h3></p>
                          </div>
-                     </div>
+                     </div> {% endcomment %}
                      <div class="col-xl-2 col-lg-2">
                          <div class="footer-social f-right">
                              <a href="#"><i class="fab fa-facebook-f"></i></a>

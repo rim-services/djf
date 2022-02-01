@@ -429,5 +429,31 @@ def supprimer_entreprise(request, myid):
     return redirect("/tous_les_entreprises")
 
 def freelancerHomePage(request):
+    if request.method == "POST":
+        mot = request.POST['motcle']
+        c_emplois = C_emploi.objects.filter(description__contains=mot)
+        return render(request, "freelancer/freelancer.html", {'c_emplois':c_emplois})
     c_emplois = C_emploi.objects.all()
     return render(request, "freelancer/freelancer.html", {'c_emplois':c_emplois})
+
+
+def languesmaitrise(request):
+    if request.method == "POST":
+        langueid = request.POST['idid']
+        c_emploi = C_emploi.objects.get(user=request.user)
+        id = c_emploi.user_id
+        lm = LangueMaitrise.objects.create(c_emploi_id=id, langue_id=langueid)
+        lm.save()
+        
+    c_emploi = C_emploi.objects.get(user=request.user)
+    id = c_emploi.user_id
+    langues = LangueMaitrise.objects.filter(c_emploi_id=id)
+    lang = Langue.objects.all()
+    return render(request, "languesmaitrise.html", {'langues':langues, 'lang':lang})
+
+def detailfreelancer(request, id):
+    c_emploi = C_emploi.objects.get(id=id)
+    iddd = c_emploi.user_id
+    lm = LangueMaitrise.objects.filter(c_emploi_id=iddd)
+    k = C_emploi.objects.get(id=id)
+    return render(request, "freelancer/detailfreelancer.html", {'k':k, 'lm':lm})

@@ -1,0 +1,60 @@
+{% extends 'user_navbar.html' %}
+{% block title %} Profile de l'utilisateur {% endblock %}
+{% block home %} active {% endblock %}
+{% block css %}
+{% endblock %}
+{% block body %}
+<div class="container">
+    <section class="search-sec">
+        <div class="container">
+            <form  action="" method="POST" novalidate="novalidate">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-5 col-md-3 col-sm-12 p-0">
+                                <select name="idid" class="form-control search-slt" >
+                                    {% for ll in lang%}
+                                    <option value="{{ll.id}}">{{ll.nom}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-lg-2 col-md-4 ">
+                                {% comment %} <button type="button" class="btn btn-succes">Chercher</button> {% endcomment %}
+                                <button type="submit" value="Submit" style="background-color:green; height:50px; width:150px">Enregistrer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        </section>
+        
+    
+    <table class="table table-hover" >
+        <thead>
+            <tr>
+                <th>Langue</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for l in langues %}
+            <tr>
+                <td>{{l.langue.nom}}</td>
+                <td>{{l.langue.description}}</td>
+            </tr>
+            {% endfor %}
+    
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    {% if alert %}
+    alert("Le lang a ete ajouter avec succes")
+    window.location = "/page_home_chercheur_emploi"
+    {% endif %}
+</script>
+{% endblock %}

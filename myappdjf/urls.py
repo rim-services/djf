@@ -27,7 +27,7 @@ urlpatterns = [
     path("les_annonces_emploi/", views.les_annonces_emploi, name="les_annonces_emploi"),
     path("detail_annonce/<int:myid>/", views.detail_annonce, name="detail_annonce"),
     path("deposer_pour_emploi/<int:myid>/", views.deposer_pour_emploi, name="deposer_pour_emploi"),
-
+    path("languesmaitrise/", views.languesmaitrise, name="languesmaitrise"),
     # les entreprises
     path("inscription_entreprise/", views.inscription_entreprise, name="inscription_entreprise"),
     path("connexion_entreprise/", views.connexion_entreprise, name="connexion_entreprise"),
@@ -40,5 +40,6 @@ urlpatterns = [
 
     # les visiteurs
     path("freelancer/", views.freelancerHomePage, name="freelancer"),
+    path("detailfreelancer/<int:id>/", views.detailfreelancer, name="detailfreelancer"),
     
 ]

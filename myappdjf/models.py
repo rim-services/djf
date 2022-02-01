@@ -70,15 +70,12 @@ class Notes(models.Model):
 
 class Langue(models.Model):
     nom = models.CharField(max_length=100, default="", editable=False)
-    utilite = models.CharField(max_length=15)
     description = models.TextField(max_length=400, default="", editable=False)
     
     def __str__ (self):
         return self.nom
 class LangueMaitrise(models.Model):
     c_emploi = models.ForeignKey(C_emploi, on_delete=models.CASCADE)
-    nom = models.CharField(max_length=200)
-    niveau = models.CharField(max_length=400)
     langue = models.ForeignKey(Langue, default="",on_delete=models.CASCADE)
     
     def __str__ (self):
