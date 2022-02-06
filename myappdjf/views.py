@@ -66,7 +66,7 @@ def page_home_chercheur_emploi(request):
         c_emploi.user.first_name = first_name
         c_emploi.user.last_name = last_name
         c_emploi.phone = telephone
-        c_emploi.gender = sexe
+        c_emploi.sexe = sexe
         c_emploi.description = description
         
         c_emploi.save()
@@ -97,30 +97,30 @@ def les_annonces_emploi(request):
         browser.get("https://www.linkedin.com/jobs/search?keywords="+key+"&location="+localite+"&position=1&pageNum=0")
         jobs_titres=browser.find_elements_by_class_name("base-search-card__title")
         tt=[] 
-        iterator = islice(jobs_titres, 10)
+        iterator = islice(jobs_titres, 25)
         for i in iterator:
             tt.append(i.text)
         
         jobs_entreprises=browser.find_elements_by_class_name("base-search-card__subtitle")
         ne=[] 
-        iterator = islice(jobs_entreprises, 10)
+        iterator = islice(jobs_entreprises, 25)
         for i in iterator:
             ne.append(i.text)
         jobs_adresses=browser.find_elements_by_class_name("job-search-card__location")
         ja=[]
-        iterator = islice(jobs_adresses, 10)
+        iterator = islice(jobs_adresses, 25)
         for i in iterator:
             ja.append(i.text)
         jobs_date=browser.find_elements_by_tag_name("time")
         # jobs_date=browser.find_elements_by_class_name("job-search-card__listdate--new job-search-card__listdate")
         jd=[]  
-        iterator = islice(jobs_date, 10)
+        iterator = islice(jobs_date, 25)
         for i in iterator:
             jd.append(i.text)
             
         jobs_links = browser.find_elements_by_tag_name('a')
         jl= [elem.get_attribute('href') for elem in jobs_links]
-        iterator = islice(jl, 10)
+        iterator = islice(jl, 25)
         for elem in iterator:
             jl.append(elem)
         
@@ -145,7 +145,74 @@ def les_annonces_emploi(request):
         return render(request, "les_annonces_emploi.html", {'travail':travail, 'data':data, 'listjobs':listjobs, 'x':x, 'y':y})
     x=1
     y=0
-    return render(request, "les_annonces_emploi.html",{'x':x, 'y':y})
+    c = C_emploi.objects.get(user=request.user)
+    id = c.user_id
+    languesm = LangueMaitrise.objects.filter(c_emploi_id=id)
+    
+    # list des langues maitrisé 'lm'
+    # lm=[]
+    # for i in languesm:
+    #     lm.append(i.langue.nom)
+    # key = ""
+    # for i in lm:
+	#     key = (key +" "+ i)
+    lm = []
+    for i in languesm:
+        lm.append(i.langue.nom)
+    key=""
+    for i in lm:
+        key=key+" "+i
+    
+    browser=webdriver.Chrome("chromedriver.exe")    
+    browser.get("https://www.linkedin.com/jobs/search?keywords="+key+"&location=""&position=1&pageNum=0")
+    jobs_titres=browser.find_elements_by_class_name("base-search-card__title")
+    tt=[] 
+    iterator = islice(jobs_titres, 25)
+    for i in iterator:
+        tt.append(i.text)
+    
+    jobs_entreprises=browser.find_elements_by_class_name("base-search-card__subtitle")
+    ne=[] 
+    iterator = islice(jobs_entreprises, 25)
+    for i in iterator:
+        ne.append(i.text)
+    jobs_adresses=browser.find_elements_by_class_name("job-search-card__location")
+    ja=[]
+    iterator = islice(jobs_adresses, 25)
+    for i in iterator:
+        ja.append(i.text)
+    jobs_date=browser.find_elements_by_tag_name("time")
+    # jobs_date=browser.find_elements_by_class_name("job-search-card__listdate--new job-search-card__listdate")
+    jd=[]  
+    iterator = islice(jobs_date, 25)
+    for i in iterator:
+        jd.append(i.text)
+        
+    jobs_links = browser.find_elements_by_tag_name('a')
+    jl= [elem.get_attribute('href') for elem in jobs_links]
+    iterator = islice(jl, 25)
+    for elem in iterator:
+        jl.append(elem)
+    
+    
+    
+        
+        
+    jobss=[ne,tt,ja,jd,jl]
+    listjobs=[]
+    for item in range(0,len(jobss[3])):
+        singlejob=[]
+        singlejob.append(jobss[0][item])
+        singlejob.append(jobss[1][item])
+        singlejob.append(jobss[2][item])
+        singlejob.append(jobss[3][item])
+        singlejob.append(jobss[4][item])
+        listjobs.append(singlejob)
+    time.sleep(5)
+    browser.close() 
+     
+    return render(request, "les_annonces_emploi.html",{'x':x, 'y':y,'listjobs':listjobs, 'lm':lm})
+
 def detail_annonce(request, myid):
     travail = Travail.objects.get(id=myid)
     return render(request, "detail_annonce.html", {'travail':travail})
