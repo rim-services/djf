@@ -378,15 +378,18 @@
 <div class="container mt-4 shadow-lg py-3 mb-4">
     
 <div class="row">
-    {% comment %} <div class="col-md-5">
-        <img src="{{k.image.url}}" alt="" width="350px" height="250px">
-    </div> {% endcomment %}
+    <div class="col-md-5">
+        <a><img src="{{item.5}}" alt="" ></a>
+        
+    </div>
     <div class="col-md-6">
         <h2>{{item.o}}</h2>
         <p>{{item.1}}</p>
         <p>{{item.2}}</p>
         <p>{{item.3}}</p> 
-        <i class="fa fa-map-marker">{{item.4}} </i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button href="{{item.4}}" style="background-color:green; height:50px; width:150px">Voir details</button>
+
         
         
     </div>

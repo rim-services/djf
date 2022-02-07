@@ -196,9 +196,14 @@ def les_annonces_emploi(request):
     
     
     
-        
-        
-    jobss=[ne,tt,ja,jd,jl]
+    images = browser.find_elements_by_tag_name('img')
+    ji=[]
+    iterator = islice(images, 25)
+    for elem in iterator:
+        ji.append(elem.get_attribute('src'))
+    
+     
+    jobss=[ne,tt,ja,jd,jl,ji]
     listjobs=[]
     for item in range(0,len(jobss[3])):
         singlejob=[]
@@ -207,6 +212,7 @@ def les_annonces_emploi(request):
         singlejob.append(jobss[2][item])
         singlejob.append(jobss[3][item])
         singlejob.append(jobss[4][item])
+        singlejob.append(jobss[5][item])
         listjobs.append(singlejob)
     time.sleep(5)
     browser.close() 
