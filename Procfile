@@ -1,1 +1,1 @@
-web: gunicorn Djf.wsgi
+web: gunicorn Djf.wsgi 
