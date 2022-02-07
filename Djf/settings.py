@@ -9,8 +9,10 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+import django_heroku
 import os
 from pathlib import Path
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -76,16 +78,22 @@ WSGI_APPLICATION = 'Djf.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 
+# DATABASES = {
+# 'default': {
+#     'ENGINE': 'django.db.backends.mysql',
+#     'NAME': 'djf',
+#     'HOST': '127.0.0.1',
+#     'PORT': '3306',
+#     'USER': 'root',
+#     'PASSWORD': '',
+#     'OPTION': {'init_command':"SET sql_mode='STRICT_TRANS_TABLE',"},
+# }}
 DATABASES = {
-'default': {
-    'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'djf',
-    'HOST': '127.0.0.1',
-    'PORT': '3306',
-    'USER': 'root',
-    'PASSWORD': '',
-    'OPTION': {'init_command':"SET sql_mode='STRICT_TRANS_TABLE',"},
-}}
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -125,13 +133,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "Djfapp/static")
+    os.path.join(BASE_DIR, "myappdjf/static")
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'Djfapp/media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'myappdjf/media')
 MEDIA_URL = '/media/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+django_heroku.settings(locals())

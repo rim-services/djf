@@ -519,13 +519,15 @@ def languesmaitrise(request):
     if request.method == "POST":
         langueid = request.POST['idid']
         c_emploi = C_emploi.objects.get(user=request.user)
+        langue = Langue.objects.get(id=langueid)
         id = c_emploi.user_id
-        lm = LangueMaitrise.objects.create(c_emploi_id=id, langue_id=langueid)
+        
+        lm = LangueMaitrise.objects.create(c_emploi=c_emploi, langue=langue)
         lm.save()
         
     c_emploi = C_emploi.objects.get(user=request.user)
-    id = c_emploi.user_id
-    langues = LangueMaitrise.objects.filter(c_emploi_id=id)
+    # id = c_emploi.user_id
+    langues = LangueMaitrise.objects.filter(c_emploi=c_emploi)
     lang = Langue.objects.all()
     return render(request, "languesmaitrise.html", {'langues':langues, 'lang':lang})
 
