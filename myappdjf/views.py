@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+
 from django.shortcuts import render, redirect
 from . models import *
 from django.contrib.auth.models import User
@@ -7,8 +7,36 @@ from datetime import date
 from itertools import islice
 from selenium import webdriver
 import time
-from selenium.webdriver.common.keys import Keys
+from django.http.response import JsonResponse
+from rest_framework.response import Response
+from rest_framework import status, filters
+from rest_framework.decorators import api_view
+from .serializers import *
 
+
+
+@api_view(['GET','POST'])
+def rest(request):
+    if request.method == 'GET':
+        c = Langue.objects.all()
+        serializer = LangueSerializer(c, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        try:
+            n = request.data["nom"]
+            d = request.data["description"]
+            lang = Langue.objects.create(nom=n, description=d)
+            return Response(
+            "success",
+            status=status.HTTP_201_CREATED
+        )
+        except:
+            return Response(
+                "error, invalid data",
+                status=status.HTTP_400_BAD_REQUEST
+            )
+            
 def scrapp(request):
     
     list=[[1,2,3],["med","sidi","ali"],["brk","psidi","pali"]]
@@ -506,12 +534,19 @@ def supprimer_entreprise(request, myid):
     entreprise.delete()
     return redirect("/tous_les_entreprises")
 
+
+
+
 def freelancerHomePage(request):
     if request.method == "POST":
         mot = request.POST['motcle']
         c_emplois = C_emploi.objects.filter(description__contains=mot)
         return render(request, "freelancer/freelancer.html", {'c_emplois':c_emplois})
+    
     c_emplois = C_emploi.objects.all()
+    #     serializer = C_emploiSerializer(c_emplois, many=True), 
+    #     return Response(serializer.data)
+    
     return render(request, "freelancer/freelancer.html", {'c_emplois':c_emplois})
 
 
