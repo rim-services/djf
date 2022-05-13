@@ -50,6 +50,7 @@ Markdown = "==3.3.6"
 Pillow = "==9.0.1"
 PyMySQL = "==1.0.2"
 pyOpenSSL = "==22.0.0"
+webdriver-manager = "*"
 
 [dev-packages]
 
