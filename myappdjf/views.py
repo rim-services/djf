@@ -113,6 +113,8 @@ def les_annonces_emploi(request):
     #browser=webdriver.Chrome("chromedriver.exe") 
     
     browser = webdriver.Chrome(service=Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()))   
+    #browser = webdriver.Chrome()  
+    # jkdn
     
     browser.get("https://www.linkedin.com/jobs/search?keywords="+key+"&location=""&position=1&pageNum=0")
     jobs_titres=browser.find_elements_by_class_name("base-search-card__title")
