@@ -41,9 +41,8 @@ def les_annonces_emploi(request):
         data = []
         for i in deposer:
             data.append(i.travail.id)
-        # sale7 mais nb9i ncgangih yebge bla fichier executable !
         # browser=webdriver.Chrome("chromedriver.exe")
-        
+        #f
         
         
        
