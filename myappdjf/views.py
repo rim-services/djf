@@ -7,6 +7,7 @@ from datetime import date
 from itertools import islice
 
 from selenium import webdriver
+import os
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.utils import ChromeType
@@ -19,13 +20,13 @@ from rest_framework.decorators import api_view
 from .serializers import *
 
 
-GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google_chrome'
-CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
-
 chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument('--disable-gpu')
-chrome_options.add_argument('--no-sandbox')
-chrome_options.binary_location = GOOGLE_CHROME_PATH
+chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--no-sandbox")
+
 
 def les_annonces_emploi(request):
     # recuperation des travails a partir de notre base
@@ -47,7 +48,9 @@ def les_annonces_emploi(request):
        
         
         #browser = webdriver.Chrome(service=Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()))
-        browser = webdriver.Chrome(execution_path=CHROMEDRIVER_PATH, chrome_options=chrome_options)
+        #browser = webdriver.Chrome(execution_path=CHROMEDRIVER_PATH, chrome_options=chrome_options)
+        browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+    
         browser.get("https://www.linkedin.com/jobs/search?keywords="+key+"&location="+localite+"&position=1&pageNum=0")
         # recuperation des jobs titres
         jobs_titres=browser.find_elements_by_class_name("base-search-card__title")
@@ -121,7 +124,9 @@ def les_annonces_emploi(request):
     #browser=webdriver.Chrome("chromedriver.exe") 
     
     #browser = webdriver.Chrome(service=Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()))   
-    browser = webdriver.Chrome(execution_path=CHROMEDRIVER_PATH, chrome_options=chrome_options)
+    
+    browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+    
     #browser = webdriver.Chrome()  
     # jkdn
     
