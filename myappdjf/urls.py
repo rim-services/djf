@@ -40,6 +40,6 @@ urlpatterns = [
 
     # les visiteurs
     path("freelancer/", views.freelancerHomePage, name="freelancer"),
-    path("detailfreelancer/<int:id>/", views.detailfreelancer, name="detailfreelancer"),
+    path("detailfreelancer2/", views.detailfreelancer, name="detailfreelancer"),
     
 ]

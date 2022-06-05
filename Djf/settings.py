@@ -78,7 +78,7 @@ TEMPLATES = [
             ],
         },
     },
-]
+    ]
 
 WSGI_APPLICATION = 'Djf.wsgi.application'
 
