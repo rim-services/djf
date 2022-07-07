@@ -1,41 +1,114 @@
-
-from urllib import response
 from django.shortcuts import render, redirect
 from . models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from datetime import date
 from itertools import islice
-
-from django.views.decorators.csrf import csrf_exempt
-
 from selenium import webdriver
-import os
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.utils import ChromeType
-
 import time
 from django.http.response import JsonResponse
 from rest_framework.response import Response
 from rest_framework import status, filters
 from rest_framework.decorators import api_view
 from .serializers import *
-import json
 
 
-chrome_options = webdriver.ChromeOptions()
-chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--disable-dev-shm-usage")
-chrome_options.add_argument("--no-sandbox")
-#hkj
 
 @api_view(['GET','POST'])
-def les_annonces_emploi(request):
+def rest(request):
+    if request.method == 'GET':
+        c = Langue.objects.all()
+        serializer = LangueSerializer(c, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        try:
+            n = request.data["nom"]
+            d = request.data["description"]
+            lang = Langue.objects.create(nom=n, description=d)
+            return Response(
+            "success",
+            status=status.HTTP_201_CREATED
+        )
+        except:
+            return Response(
+                "error, invalid data",
+                status=status.HTTP_400_BAD_REQUEST
+            )
+            
+def scrapp(request):
+    
+    list=[[1,2,3],["med","sidi","ali"],["brk","psidi","pali"]]
+    listjobs=[]
+    for item in range(0,len(list[0])):
+        singlejob=[]
+        singlejob.append(list[0][item])
+        singlejob.append(list[1][item])
+        singlejob.append(list[2][item])
+        listjobs.append(singlejob)
+        
+    return render(request, "jobscrapped.html",{'listjobs':listjobs})
+
+def index(request):
+    return render(request, "index.html")
+
+def stat(request):
+    t = Travail.objects.count()
+    e = Entreprise.objects.count()
+    c = C_emploi.objects.count()
+    return render(request, "statistiques.html", {'t':t, 'e':e, 'c':c})
+
+def connexion_chercheur_emploi(request): 
+    if request.user.is_authenticated:
+        return redirect("/page_home_chercheur_emploi")
+    else:
+        if request.method == "POST":
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                user1 = C_emploi.objects.get(user=user)
+                if user1.type == "c_emploi":
+                    login(request, user)
+                    return redirect("/page_home_chercheur_emploi")
+            else:   
+                msg = "Les données sont  erronés, ressayer"
+                return render(request, "connexion_chercheur_emploi.html", {"msg":msg})
+    return render(request, "connexion_chercheur_emploi.html")
+
+def page_home_chercheur_emploi(request):
     if not request.user.is_authenticated:
-        return Response('pas connecter',status=status.HTTP_401_UNAUTHORIZED)
+        return redirect('/connexion_chercheur_emploi/')
+    c_emploi = C_emploi.objects.get(user=request.user)
+    if request.method=="POST":   
+        email = request.POST['email']
+        first_name=request.POST['first_name']
+        last_name=request.POST['last_name']
+        telephone = request.POST['telephone']
+        sexe = request.POST['sexe']
+        description = request.POST['description']
+
+        c_emploi.user.email = email
+        c_emploi.user.first_name = first_name
+        c_emploi.user.last_name = last_name
+        c_emploi.phone = telephone
+        c_emploi.sexe = sexe
+        c_emploi.description = description
+        
+        c_emploi.save()
+        c_emploi.user.save()
+        try:
+            image = request.FILES['image']
+            c_emploi.image = image
+            c_emploi.save()
+        except:
+            pass
+        alert = True
+        return render(request, "page_home_chercheur_emploi.html", {'alert':alert})
+    return render(request, "page_home_chercheur_emploi.html", {'c_emploi':c_emploi})
+
+def les_annonces_emploi(request):
     travail = Travail.objects.all().order_by('-date_debut')
     c_emploi = C_emploi.objects.get(user=request.user)
     deposer = Deposer.objects.filter(c_emploi=c_emploi)
@@ -46,41 +119,31 @@ def les_annonces_emploi(request):
         data = []
         for i in deposer:
             data.append(i.travail.id)
+        browser=webdriver.Chrome("chromedriver.exe")
         
-       
-        
-        browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
-    
         browser.get("https://www.linkedin.com/jobs/search?keywords="+key+"&location="+localite+"&position=1&pageNum=0")
-        # recuperation des jobs titres
         jobs_titres=browser.find_elements_by_class_name("base-search-card__title")
         tt=[] 
         iterator = islice(jobs_titres, 25)
         for i in iterator:
             tt.append(i.text)
-        # entreprises qui recrutent
+        
         jobs_entreprises=browser.find_elements_by_class_name("base-search-card__subtitle")
         ne=[] 
         iterator = islice(jobs_entreprises, 25)
         for i in iterator:
             ne.append(i.text)
-            
-            
         jobs_adresses=browser.find_elements_by_class_name("job-search-card__location")
         ja=[]
         iterator = islice(jobs_adresses, 25)
         for i in iterator:
             ja.append(i.text)
-            
-            
         jobs_date=browser.find_elements_by_tag_name("time")
         # jobs_date=browser.find_elements_by_class_name("job-search-card__listdate--new job-search-card__listdate")
         jd=[]  
         iterator = islice(jobs_date, 25)
         for i in iterator:
             jd.append(i.text)
-          
-          
             
         jobs_links = browser.find_elements_by_tag_name('a')
         jl= [elem.get_attribute('href') for elem in jobs_links]
@@ -107,259 +170,111 @@ def les_annonces_emploi(request):
         x=0
         y=1
         return render(request, "les_annonces_emploi.html", {'travail':travail, 'data':data, 'listjobs':listjobs, 'x':x, 'y':y})
+    x=1
+    y=0
+    c = C_emploi.objects.get(user=request.user)
+    id = c.user_id
+    languesm = LangueMaitrise.objects.filter(c_emploi_id=id)
     
-    if request.method == 'GET':
-        x=1
-        y=0
-        #user2 = User.objects.get(id=1)
-        c = C_emploi.objects.get(user=request.user)
-        id = c.user_id
-        languesm = LangueMaitrise.objects.filter(c_emploi_id=id)
-        
+    # list des langues maitrisé 'lm'
+    # lm=[]
+    # for i in languesm:
+    #     lm.append(i.langue.nom)
+    # key = ""
+    # for i in lm:
+	#     key = (key +" "+ i)
+    lm = []
+    for i in languesm:
+        lm.append(i.langue.nom)
+    key=""
+    for i in lm:
+        key=key+" "+i
     
-        lm = []
-        for i in languesm:
-            lm.append(i.langue.nom)
-        key=""
-        for i in lm:
-            key=key+" "+i
-        #if in path
-        #browser=webdriver.Chrome("chromedriver.exe") 
-        
-        
-        #if in local
-        browser = webdriver.Chrome(service=Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()))   
-        
-        
-        #if in heroku
-        #browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
-        
-        #browser = webdriver.Chrome()  
-        # jkdn
-        
-        browser.get("https://www.linkedin.com/jobs/search?keywords="+key+"&location=""&position=1&pageNum=0")
-        jobs_titres=browser.find_elements_by_class_name("base-search-card__title")
-        tt=[] 
-        iterator = islice(jobs_titres, 25)
-        for i in iterator:
-            tt.append(i.text)
-        
-        jobs_entreprises=browser.find_elements_by_class_name("base-search-card__subtitle")
-        ne=[] 
-        iterator = islice(jobs_entreprises, 25)
-        for i in iterator:
-            ne.append(i.text)
-        jobs_adresses=browser.find_elements_by_class_name("job-search-card__location")
-        ja=[]
-        iterator = islice(jobs_adresses, 25)
-        for i in iterator:
-            ja.append(i.text)
-        jobs_date=browser.find_elements_by_tag_name("time")
-        # jobs_date=browser.find_elements_by_class_name("job-search-card__listdate--new job-search-card__listdate")
-        jd=[]  
-        iterator = islice(jobs_date, 25)
-        for i in iterator:
-            jd.append(i.text)
-            
-        jobs_links = browser.find_elements_by_tag_name('a')
-        jl= [elem.get_attribute('href') for elem in jobs_links]
-        iterator = islice(jl, 25)
-        for elem in iterator:
-            jl.append(elem)
-        
-        
-        
-        images = browser.find_elements_by_tag_name('img')
-        ji=[]
-        iterator = islice(images, 25)
-        for elem in iterator:
-            ji.append(elem.get_attribute('src'))
-        
-        
-        jobss=[ne,tt,ja,jd,jl,ji]
-        listjobs=[]
-        for item in range(0,len(jobss[3])):
-            singlejob=[]
-            singlejob.append(jobss[0][item])
-            singlejob.append(jobss[1][item])
-            singlejob.append(jobss[2][item])
-            singlejob.append(jobss[3][item])
-            singlejob.append(jobss[4][item])
-            singlejob.append(jobss[5][item])
-            listjobs.append(singlejob)
-        time.sleep(5)
-        browser.close() 
+    browser=webdriver.Chrome("chromedriver.exe")    
+    browser.get("https://www.linkedin.com/jobs/search?keywords="+key+"&location=""&position=1&pageNum=0")
+    jobs_titres=browser.find_elements_by_class_name("base-search-card__title")
+    tt=[] 
+    iterator = islice(jobs_titres, 25)
+    for i in iterator:
+        tt.append(i.text)
     
-    back = []
-    for item in listjobs:
-        obj = {
-            "nom": item[0],
-            "entreprise": item[1],
-            "adresse": item[2],
-            "date": item[3],
-            "link": item[4],
-            "img": item[5]
-        }
-        back.append(obj)
-      
-    #js = json.dumps(back)
-    js= back
-    # return js
-    return Response(js, status=status.HTTP_200_OK)
-    #return render(request, "les_annonces_emploi.html",{'x':x, 'y':y,'listjobs':listjobs, 'lm':lm})
-
-
-
-@api_view(['GET','POST'])
-def rest(request):
-    if request.method == 'GET':
-        c = Langue.objects.all()
-        serializer = LangueSerializer(c, many=True)
-        return Response(serializer.data)
+    jobs_entreprises=browser.find_elements_by_class_name("base-search-card__subtitle")
+    ne=[] 
+    iterator = islice(jobs_entreprises, 25)
+    for i in iterator:
+        ne.append(i.text)
+    jobs_adresses=browser.find_elements_by_class_name("job-search-card__location")
+    ja=[]
+    iterator = islice(jobs_adresses, 25)
+    for i in iterator:
+        ja.append(i.text)
+    jobs_date=browser.find_elements_by_tag_name("time")
+    # jobs_date=browser.find_elements_by_class_name("job-search-card__listdate--new job-search-card__listdate")
+    jd=[]  
+    iterator = islice(jobs_date, 25)
+    for i in iterator:
+        jd.append(i.text)
+        
+    jobs_links = browser.find_elements_by_tag_name('a')
+    jl= [elem.get_attribute('href') for elem in jobs_links]
+    iterator = islice(jl, 25)
+    for elem in iterator:
+        jl.append(elem)
     
-
-    elif request.method == 'POST':
-        try:
-            n = request.data["nom"]
-            d = request.data["description"]
-            lang = Langue.objects.create(nom=n, description=d)
-            return Response(
-            "success",
-            status=status.HTTP_201_CREATED
-        )
-        except:
-            return Response(
-                "error, invalid data",
-                status=status.HTTP_400_BAD_REQUEST
-            )
-            
-            
-def scrapp(request):
     
-    list=[[1,2,3],["med","sidi","ali"],["brk","psidi","pali"]]
+    
+    images = browser.find_elements_by_tag_name('img')
+    ji=[]
+    iterator = islice(images, 25)
+    for elem in iterator:
+        ji.append(elem.get_attribute('src'))
+    
+     
+    jobss=[ne,tt,ja,jd,jl,ji]
     listjobs=[]
-    for item in range(0,len(list[0])):
+    for item in range(0,len(jobss[3])):
         singlejob=[]
-        singlejob.append(list[0][item])
-        singlejob.append(list[1][item])
-        singlejob.append(list[2][item])
+        singlejob.append(jobss[0][item])
+        singlejob.append(jobss[1][item])
+        singlejob.append(jobss[2][item])
+        singlejob.append(jobss[3][item])
+        singlejob.append(jobss[4][item])
+        singlejob.append(jobss[5][item])
         listjobs.append(singlejob)
-        
-    return render(request, "jobscrapped.html",{'listjobs':listjobs})
+    time.sleep(5)
+    browser.close() 
+     
+    return render(request, "les_annonces_emploi.html",{'x':x, 'y':y,'listjobs':listjobs, 'lm':lm})
 
-def index(request):
-    return render(request, "index.html")
-
-def stat(request):
-    t = Travail.objects.count()
-    e = Entreprise.objects.count()
-    c = C_emploi.objects.count()
-    return render(request, "statistiques.html", {'t':t, 'e':e, 'c':c})
-# @csrf_exempt
-
-
-@api_view(['GET'])
-def deconnecter(request):
-    if request.user.is_authenticated:
-        logout(request)
-        return Response("success",status=status.HTTP_201_CREATED )
-        
-    else:
-        return Response("tu n'est pas connecter",status=status.HTTP_201_CREATED ) 
-    #return redirect('/')
-    
-@csrf_exempt
-@api_view(['POST'])
-def connexion_chercheur_emploi(request): 
-    
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return Response("Authenticated",status=status.HTTP_201_CREATED)
-        else:
-            return Response("error, invalid data",
-                   status=status.HTTP_400_BAD_REQUEST)
-            
-    else:
-            return Response("only post method ",status=status.HTTP_404_NOT_FOUND ) 
-@csrf_exempt
-@api_view(['GET','POST'])
-def page_home_chercheur_emploi(request):
-    if not request.user.is_authenticated:
-        return Response('pas connecter',status=status.HTTP_401_UNAUTHORIZED)
-    c_emploi = C_emploi.objects.get(user=request.user)
-    if request.method=="POST":   
-        email = request.POST['email']
-        first_name=request.POST['first_name']
-        last_name=request.POST['last_name']
-        telephone = request.POST['telephone']
-        sexe = request.POST['sexe']
-        description = request.POST['description']
-
-        c_emploi.user.email = email
-        c_emploi.user.first_name = first_name
-        c_emploi.user.last_name = last_name
-        c_emploi.phone = telephone
-        c_emploi.sexe = sexe
-        c_emploi.description = description
-        
-        c_emploi.save()
-        c_emploi.user.save()
-        try:
-            image = request.FILES['image']
-            c_emploi.image = image
-            c_emploi.save()
-        except:
-            pass
-        serializer = C_emploiSerializer(c_emploi, many=False)
-        return Response(serializer.data)
-    
-    if request.method=="GET":   
-        serializer = C_emploiSerializer(c_emploi, many=False)
-        return Response(serializer.data)
-    #return render(request, "page_home_chercheur_emploi.html", {'c_emploi':c_emploi})
-@api_view(['GET'])   
 def detail_annonce(request, myid):
-    if not request.user.is_authenticated:
-        return Response('pas connecter',status=status.HTTP_401_UNAUTHORIZED)
-    if request.method == "GET":
-        travail = Travail.objects.get(id=myid)
-        serializer = TravailSerializer(travail, many=False)
-        return Response(serializer.data)
-    else:
-        return Response("not get method",status=status.HTTP_401_UNAUTHORIZED)
-    #return render(request, "detail_annonce.html", {'travail':travail})
+    travail = Travail.objects.get(id=myid)
+    return render(request, "detail_annonce.html", {'travail':travail})
 
 def deposer_pour_emploi(request, myid):
     if not request.user.is_authenticated:
-        return Response('pas connecter',status=status.HTTP_401_UNAUTHORIZED)
+        return redirect("/connexion_chercheur_emploi")
     c_emploi = C_emploi.objects.get(user=request.user)
     travail = Travail.objects.get(id=myid)
     date1 = date.today()
     if travail.date_fin < date1:
-        return Response("closed", status=status.HTTP_200_OK)
+        closed=True
+        return render(request, "deposer_pour_emploi.html", {'closed':closed})
     elif travail.date_debut > date1:
-        
-        return Response("pas encore ouvert", status=status.HTTP_200_OK)
+        notopen=True
+        return render(request, "deposer_pour_emploi.html", {'notopen':notopen})
     else:
         if request.method == "POST":
             cv = request.FILES['cv']
             Deposer.objects.create(travail=travail, entreprise=travail.entreprise, c_emploi=c_emploi, cv=cv, date_depot=date.today())
-            
-            return Response("done", status=status.HTTP_200_OK)
-    return Response("erreur survenue", status=status.HTTP_404_NOT_FOUND)
+            alert=True
+            return render(request, "deposer_pour_emploi.html", {'alert':alert})
+    return render(request, "deposer_pour_emploi.html", {'travail':travail})
 
 def les_interesses(request):
     entreprise = Entreprise.objects.get(user=request.user)
     deposer = Deposer.objects.filter(entreprise=entreprise)
     return render(request, "les_interesses.html", {'deposer':deposer})
 
-
-@csrf_exempt
-@api_view(['GET','POST'])
 def inscription_chercheur_emploi(request):
     if request.method=="POST":   
         email = request.POST['email']
@@ -379,19 +294,16 @@ def inscription_chercheur_emploi(request):
 
         if password1 != password2:
             msg = "les mot de passes ne sont pas siyani"
-            #return render(request, "inscription_chercheur_emploi.html", {'msg':msg})
-            return Response(msg,status=status.HTTP_401_UNAUTHORIZED)
+            return render(request, "inscription_chercheur_emploi.html", {'msg':msg})
+        
         user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, password=password1)
         c = C_emploi.objects.create(user=user, telephone=telephon, sexe=sexe, image=image, type="c_emploi",experience=experience, adresse=adresse, skills=skills, description=description)
         user.save()
         c.save()
-        serializer = C_emploiSerializer(c, many=False)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-        #msg = "inscription faite avec succées, vous pouvez se connecter maintenant"
-        #return render(request, "connexion_chercheur_emploi.html", {'msg':msg})
-    msg = "Désolé, only post method"
-    return response(msg,status=status.HTTP_404_NOT_FOUND)
-    #return render(request, "inscription_chercheur_emploi.html", {'msg2':msg})
+        msg = "inscription faite avec succées, vous pouvez se connecter maintenant"
+        return render(request, "connexion_chercheur_emploi.html", {'msg':msg})
+    msg = "Désolé, veillez ressayer"
+    return render(request, "inscription_chercheur_emploi.html", {'msg2':msg})
 
 def inscription_entreprise(request):
     if request.method=="POST":   
@@ -543,7 +455,9 @@ def logo_entreprise(request, myid):
         return render(request, "logo_entreprise.html", {'alert':alert})
     return render(request, "logo_entreprise.html", {'travail':travail})
 
-
+def deconnecter(request):
+    logout(request)
+    return redirect('/')
 
 def connexion_administrateur(request):
     if request.method == "POST":
@@ -620,25 +534,22 @@ def supprimer_entreprise(request, myid):
     return redirect("/tous_les_entreprises")
 
 
-@csrf_exempt
-@api_view(['GET','POST'])
+
+
 def freelancerHomePage(request):
-    
     if request.method == "POST":
         mot = request.POST['motcle']
         c_emplois = C_emploi.objects.filter(description__contains=mot)
-        serializer = C_emploiSerializer(c_emplois, many=True)
-        return Response(serializer.data)
-     
-    if request.method == 'GET':
-        c = C_emploi.objects.all()
-        serializer = C_emploiSerializer(c, many=True)
-        return Response(serializer.data)
+        return render(request, "freelancer/freelancer.html", {'c_emplois':c_emplois})
+    
+    c_emplois = C_emploi.objects.all()
+    #     serializer = C_emploiSerializer(c_emplois, many=True), 
+    #     return Response(serializer.data)
+    
+    return render(request, "freelancer/freelancer.html", {'c_emplois':c_emplois})
 
-@api_view(['GET','POST'])
+
 def languesmaitrise(request):
-    if not request.user.is_authenticated:
-        return Response('pas connecter',status=status.HTTP_401_UNAUTHORIZED)
     if request.method == "POST":
         langueid = request.POST['idid']
         c_emploi = C_emploi.objects.get(user=request.user)
@@ -647,32 +558,20 @@ def languesmaitrise(request):
         
         lm = LangueMaitrise.objects.create(c_emploi=c_emploi, langue=langue)
         lm.save()
-        serializer = LangueMaitriseSerializer(lm, many=False)
-        return Response(serializer.data ,status=status.HTTP_200_OK)
-    if request.method == "GET":
-        c_emploi = C_emploi.objects.get(user=request.user)
-        #langues = LangueMaitrise.objects.filter(c_emploi=c_emploi)
-        lang = Langue.objects.all()
-        serializer = LangueSerializer(lang, many=True)
-        return Response(serializer.data ,status=status.HTTP_200_OK)
-        # return render(request, "languesmaitrise.html", {'langues':langues, 'lang':lang})
-
-
-
-
-@csrf_exempt
-@api_view(['GET','POST'])
-def detailfreelancer(request):
-    if request.method == "POST":
-        c_emploi = C_emploi.objects.get(id=request.data['id'])
-        iddd = c_emploi.user_id
-        lm = LangueMaitrise.objects.filter(c_emploi_id=iddd)
-        serializer1 = C_emploiSerializer(c_emploi, many=False)
-        serializer2 = LangueMaitriseSerializer(lm, many=True)
-        data = []
-        data.append(serializer1.data)
-        data.append(serializer2.data)
         
-        return Response(data,status=status.HTTP_200_OK)
-    else:
-        return Response("erreur", status=status.HTTP_404_NOT_FOUND)
+    c_emploi = C_emploi.objects.get(user=request.user)
+    # id = c_emploi.user_id
+    langues = LangueMaitrise.objects.filter(c_emploi=c_emploi)
+    lang = Langue.objects.all()
+    return render(request, "languesmaitrise.html", {'langues':langues, 'lang':lang})
+
+def detailfreelancer(request, id):
+    c_emploi = C_emploi.objects.get(id=id)
+    iddd = c_emploi.user_id
+    lm = LangueMaitrise.objects.filter(c_emploi_id=iddd)
+    k = C_emploi.objects.get(id=id)
+    return render(request, "freelancer/detailfreelancer.html", {'k':k, 'lm':lm})
+
+def services(request):
+
+    return render(request, "services.html")

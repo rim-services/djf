@@ -5,32 +5,59 @@
 {% block css %}
 {% endblock %}
 {% block body %}
-<div class="container mt-4">
-<table class="table table-hover" id="example">
-    <thead>
-        <tr>
-            <th>Numero</th>
-            <th>Nom</th>
-            <th>Email </th>
-            <th>telephone</th>
-            <th>sexe</th>
-            <th>Image</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for d in c_emploi %}
-        <tr>
-            <td>{{forloop.counter}}</td>
-            <td>{{d.user.get_full_name}}</td>
-            <td>{{d.user.email}}</td>
-            <td>{{d.telephone}}</td>
-            <td>{{d.sexe}}</td>
-            <td><img src="{{d.image.url}}" class="rounded-circle" width="90px" height="70px"></td>
-            <td><a href="/supprimer_un_chercheur_emploi/{{d.user.id}}/" class="btn btn-danger" onclick="return confirm('vouler vous supprimer ce candidature?')">supprimer</a></td>
-        </tr> 
-        {% endfor %}
-    </tbody>
-</table>
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="page-header">
+            <div class="row align-items-end">
+                <div class="col-lg-8">
+                    <div class="page-header-title">
+                        <i class="ik ik-inbox bg-blue"></i>
+                      
+                    </div>
+                </div>
+           
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header"><h3>Les Chercheurs d'emplois</h3></div>
+                    <div class="card-body">
+                        <table id="data_table" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Numero</th>
+                                    <th>Nom</th>
+                                    <th>Email </th>
+                                    <th>telephone</th>
+                                    <th>sexe</th>
+                                    <th>Image</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                     {% for d in c_emploi %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>{{d.user.get_full_name}}</td>
+                                        <td>{{d.user.email}}</td>
+                                        <td>{{d.telephone}}</td>
+                                        <td>{{d.sexe}}</td>
+                                        <td><img src="{{d.image.url}}" class="table-user-thumb"></td>
+                                        <td><a href="/supprimer_un_chercheur_emploi/{{d.user.id}}/" class="btn btn-danger" onclick="return confirm('vouler vous supprimer ce candidature?')">supprimer</a></td>
+                                    </tr> 
+                                    {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
 </div>
 {% endblock %}
