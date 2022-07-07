@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from pymysql import NULL
 from . models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -570,13 +571,31 @@ def languesmaitrise(request):
         langue = Langue.objects.get(id=langueid)
         id = c_emploi.user_id
         
+            
         lm = LangueMaitrise.objects.create(c_emploi=c_emploi, langue=langue)
         lm.save()
         
     c_emploi = C_emploi.objects.get(user=request.user)
     # id = c_emploi.user_id
+    numbers=[]
     langues = LangueMaitrise.objects.filter(c_emploi=c_emploi)
-    lang = Langue.objects.all()
+    for item in langues:
+        numbers.append(item.langue.id)
+    numbersall=[]
+    x=0
+    languesall = Langue.objects.all()
+    for item in languesall:
+        if item.id not in numbers:
+            numbersall.append(item.id)
+           
+                
+    lang = Langue.objects.filter(id__in=numbersall)
+    
+    # langues2 = LangueMaitrise.objects.filter(id=5)
+    # langues2.delete()
+    # l= Langue.objects.create(nom="CSS",description="langue Front")
+    # l.save()
+    
     return render(request, "languesmaitrise.html", {'langues':langues, 'lang':lang})
 
 def detailfreelancer(request, id):
