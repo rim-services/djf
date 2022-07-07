@@ -1,3 +1,9 @@
+{% extends 'index.html' %}
+{% block title %} page de connexion pour Chercheur {% endblock %}
+
+{% block css %}
+{% endblock %}
+{% block body %}
 <!DOCTYPE html>
 {% load static %}
 <html lang="en" >
@@ -40,7 +46,7 @@
     </form>
   </div>
   <div class="signup-wrapper text-center">
-    <a href="/inscription_chercheur_emploi/">Pas encore inscrit? <span class="text-primary">3jel 3jen hun taftaf</span></a>
+    <a href="/inscription_chercheur_emploi/">Pas encore inscrit? <span class="text-primary"></span></a>
     
   </div>
 </div>
@@ -52,3 +58,4 @@
 
 </body>
 </html>
+{% endblock %}

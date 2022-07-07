@@ -1,95 +1,18 @@
-{% load static %}
-<!doctype html>
-<html class="no-js" lang="zxx">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-         <title>Annonces d'emploi </title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="manifest" href="site.webmanifest">
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"></script>
+{% extends 'index.html' %}
+{% block title %} Freelancers   {% endblock %}
 
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-		<link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}">
-        <link rel="stylesheet" href="{% static 'cssFreelancerTem.css' %}">
-        <link href="{% static 'fs/css/main.css' %}" rel="stylesheet" />
-		<!-- CSS here -->
-            <link rel="stylesheet" href="">
-            <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
-            <link rel="stylesheet" href="{% static 'assets/css/flaticon.css' %}">
-            <link rel="stylesheet" href="{% static 'assets/css/price_rangs.css' %}">
-            <link rel="stylesheet" href="{% static 'assets/css/slicknav.css' %}">
-            <link rel="stylesheet" href="{% static 'assets/css/animate.min.css' %}">
-            <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
-            <link rel="stylesheet" href="{% static 'assets/css/fontawesome-all.min.css' %}">
-            <link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">
-            <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
-            <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
-            <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
-            <link href="{% static 'fs/css/rechercher.css' %}" rel="stylesheet" />
-   </head>
+{% block css %}
+{% endblock %}
+{% block body %}
+    <!-- ======= Testimonials Section ======= -->
+    <section id="testimonials" class="testimonials section-bg">
+      <div class="container">
 
-   <body>
-    <header>
-        <!-- Header Start -->
-       <div class="header-area header-transparrent">
-           <div class="headder-top header-sticky">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-3 col-md-2">
-                            <!-- Logo -->
-                            <div class="logo">
-                                <a href=""><img src="{% static 'assets/img/logo/newlogo.png' %}" alt=""></a>
-                            </div>  
-                        </div>
-                        <div class="col-lg-9 col-md-9">
-                            <div class="menu-wrapper">
-                                <!-- Main-menu -->
-                                <div class="main-menu">
-                                    <nav class="d-none d-lg-block">
-                                        <ul id="navigation">
-                                            <li><a href="/">Accueil</a></li>
-                                            <li><a href="/freelancer/">Nos Freelancers</a></li>
-                                            <li><a href="#">Login & inscription</a>
-                                                <ul class="submenu">
-                                                    <li><a href="/connexion_administrateur/">Administrateur</a></li>
-                                                    <li><a href="/connexion_entreprise/">Entreprise</a></li>
-                                                    <li><a href="/connexion_chercheur_emploi/">Chercheur d'emploi</a></li>
-                                                </ul>
-                                            </li>
-                                            
-                                        </ul>
-                                    </nav>
-                                </div>          
-                                <!-- Header-btn -->
-                                <div class="header-btn d-none f-right d-lg-block">
-                                    <a href="#" class="btn head-btn2">A propos</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Mobile Menu -->
-                        <div class="col-12">
-                            <div class="mobile_menu d-block d-lg-none"></div>
-                        </div>
-                    </div>
-                </div>
-           </div>
-       </div>
-       
-        <!-- Header End -->
-    </header>
-    
-       
-    <div class="team-boxed">
-        <div class="container">
-            <div class="intro">
-                <h4 class="text-center">C'est comment? </h4>
-                <p class="text-center">Lors que vous selectionné votre freelancer, vous pouvez lui contacter sur son email, numéro téléphone ou whatsapp.</p>
-            </div>
-               
-            <section class="search-sec">
-            <div class="container">
+        <div class="section-title">
+          <h2>C'est comment? </h2>
+          <p>Lors que vous selectionné votre freelancer, vous pouvez lui contacter sur son email, numéro téléphone ou whatsapp.</p>
+        </div>
+  <div class="container">
                 <form  action="" method="POST" novalidate="novalidate">
                     {% csrf_token %}
                     <div class="row">
@@ -121,202 +44,37 @@
                                 </div>
                                 <div class="col-lg-2 col-md-4 ">
                                     {% comment %} <button type="button" class="btn btn-succes">Chercher</button> {% endcomment %}
-                                    <button type="submit" value="Submit" style="background-color:green; height:50px; width:150px">Chercher</button>
+                                    <button type="submit" value="Submit" style="background-color:rgb(71, 177, 253); height:50px; width:150px">Chercher</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
-            </section>
-            <div class="row people" id="function1">
-            {% for c in c_emplois %}
-                <div class="col-md-6 col-lg-6 item">
-                    <div class="box"><img class="rounded-circle" src="{{c.image.url}}">
-                        <h3 class="name">{{c.user.first_name}} {{c.user.last_name}}</h3>
-                        <p style="color:black;" class="title">{{c.user.email}} </p>
-                        <p style="color:black;" class="description"> {{c.description}} </p>
-                        <p style="color:black;" class="description"> {{c.experience}} ans d'experience </p>
-                        <p style="color:black;" class="description"> {{c.telephone}} </p>
-                        <div class="col-lg-2 col-md-4 ">
-                           
-                            {% comment %} <button type="submit" value="Submit" style="background-color:green; height:50px; width:150px">Détails</button> {% endcomment %}
-                            <a href="/detailfreelancer/{{c.id}}" class="btn btn-success"> Détails</a>
-                        </div> 
-                    </div>
-                </div>
-     
+        <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+          <div class="swiper-wrapper">
+     {% for c in c_emplois %}
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+               
+                <img src="{{c.image.url}}" class="testimonial-img" alt="">
+                <h3>{{c.user.first_name}} {{c.user.last_name}}</h3>
+                <h4>{{c.user.email}}</h4>
+				<h4>{{c.description}}</h4>
+				<h4>{{c.experience}} ans d'experience</h4>
+				<h4>{{c.telephone}}</h4>
+			   
+							   
+                 {% comment %} <button type="submit" value="Submit" style="background-color:rgb(71, 177, 253); height:50px; width:150px">Détails</button> {% endcomment %}
+				<a href="/detailfreelancer/{{c.id}}" class="btn btn-success"> Détails</a>
+			 
+              </div>
+            </div><!-- End testimonial item -->
             {% endfor %}
-  
-            </div>
+          </div>
+          <div class="swiper-pagination"></div>
         </div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
 
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</main>
-<footer>
-    <!-- Footer Start-->
-    <div class="footer-area footer-bg footer-padding">
-        <div class="container">
-            <div class="row d-flex justify-content-between">
-                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                   <div class="single-footer-caption mb-50">
-                     <div class="single-footer-caption mb-30">
-                         <div class="footer-tittle">
-                             <h4>About Us</h4>
-                             <div class="footer-pera">
-                                 <p>Je suis un étudiant Master 1 en ISCAE, je souhaite etre un grand devellopeurs dans les futures jours.</p>
-                            </div>
-                         </div>
-                     </div>
-
-                   </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-                    <div class="single-footer-caption mb-50">
-                        <div class="footer-tittle">
-                            <h4>Info de contact</h4>
-                            <ul>
-                                <li>
-                                <p>Address :Mauritania - Nouakchott - teyarett </p>
-                                </li>
-                                <li><a href="#">Telephone : +222 37-41-98-45</a></li>
-                                <li><a href="#">Email : mbeirouck@gmail.com</a></li>
-                            </ul>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-                    <div class="single-footer-caption mb-50">
-                        <div class="footer-tittle">
-                            <h4>Important Link</h4>
-                            <ul>
-                                <li><a href="#"> View Project</a></li>
-                                <li><a href="#">Contact Us</a></li>
-                                <li><a href="#">Testimonial</a></li>
-                                <li><a href="#">Proparties</a></li>
-                                <li><a href="#">Support</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-                    <div class="single-footer-caption mb-50">
-                        <div class="footer-tittle">
-                            <h4>Newsletter</h4>
-                            <div class="footer-pera footer-pera2">
-                             <p></p>
-                         </div>
-                         <!-- Form -->
-                         <div class="footer-form" >
-                             <div id="mc_embed_signup">
-                                 <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-                                 method="get" class="subscribe_form relative mail_part">
-                                     <input type="email" name="email" id="newsletter-form-email" placeholder="Email Address"
-                                     class="placeholder hide-on-focus" onfocus="this.placeholder = ''"
-                                     onblur="this.placeholder = ' Email Address '">
-                                     <div class="form-icon">
-                                         <button type="submit" name="submit" id="newsletter-submit"
-                                         class="email_icon newsletter-submit button-contactForm"><img src="assets/img/icon/form.png" alt=""></button>
-                                     </div>
-                                     <div class="mt-10 info"></div>
-                                 </form>
-                             </div>
-                         </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-           <!--  -->
-           <div class="row footer-wejed justify-content-between">
-                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                    <!-- logo -->
-                    <div class="footer-logo mb-20">
-                    <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-                <div class="footer-tittle-bottom">
-                    <span>5000+</span>
-                    <p>Talented Hunter</p>
-                </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-                    <div class="footer-tittle-bottom">
-                        <span>451</span>
-                        <p>Talented Hunter</p>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-                    <!-- Footer Bottom Tittle -->
-                    <div class="footer-tittle-bottom">
-                        <span>568</span>
-                        <p>Talented Hunter</p>
-                    </div>
-                </div>
-           </div>
-        </div>
-    </div>
-    <!-- footer-bottom area -->
-    <div class="footer-bottom-area footer-bg">
-        <div class="container">
-            <div class="footer-border">
-                 <div class="row d-flex justify-content-between align-items-center">
-                     {% comment %} <div class="col-xl-10 col-lg-10 ">
-                         <div class="footer-copy-right">
-                             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib  </a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --><h3 style="color: green;"> Modifié par moi(Mohamed Beirouk), pour qu'elle ressemble mon sitweb</h3></p>
-                         </div>
-                     </div> {% endcomment %}
-                     <div class="col-xl-2 col-lg-2">
-                         <div class="footer-social f-right">
-                             <a href="#"><i class="fab fa-facebook-f"></i></a>
-                             <a href="#"><i class="fab fa-twitter"></i></a>
-                             <a href="#"><i class="fas fa-globe"></i></a>
-                             <a href="#"><i class="fab fa-behance"></i></a>
-                         </div>
-                     </div>
-                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- Footer End-->
-</footer>
-
-
-
-</body>
-</html>
+      </div>
+    </section><!-- End Testimonials Section -->
+    {% endblock %}
