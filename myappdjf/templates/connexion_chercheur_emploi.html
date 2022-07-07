@@ -17,12 +17,14 @@
 <body>
 <!-- partial:index.partial.html -->
 <div class="logo text-center">
-  <h1>Bievenue</h1>
+  <br><br><br>
 </div>
 <div class="wrapper">
   <div class="inner-warpper text-center">
-    <h2 class="title">Chercheur d'emploi</h2>
-    <h5 style="color: red;"> {{ msg  }} </h5>
+    <h3 class="title">Chercheur d'emploi</h3>
+    <br><br>
+    <h6> {{ msg  }} </h6>
+
     <form action="" method="POST" id="formvalidate">
         {% csrf_token %}
       <div class="input-group">

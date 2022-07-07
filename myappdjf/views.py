@@ -316,7 +316,8 @@ def inscription_chercheur_emploi(request):
         user.save()
         c.save()
         msg = "inscription faite avec succées, vous pouvez se connecter maintenant"
-        return render(request, "connexion_chercheur_emploi.html", {'msg':msg})
+        return redirect('/connexion_chercheur_emploi', {'msg':msg})
+        #return render(request, "connexion_chercheur_emploi.html", {'msg':msg})
     msg = "Désolé, veillez ressayer"
     return render(request, "inscription_chercheur_emploi.html", {'msg2':msg})
 
@@ -345,6 +346,7 @@ def inscription_entreprise(request):
         entreprise = Entreprise.objects.create(user=user, telephone=telephon, sexe=sexe, image=image, nom_entreprise=nom_entreprise, type="entreprise", status="non_confirmer")
         user.save()
         entreprise.save()
+        
         return render(request, "connexion_entreprise.html")
     return render(request, "inscription_entreprise.html")
 
@@ -598,11 +600,11 @@ def languesmaitrise(request):
     
     return render(request, "languesmaitrise.html", {'langues':langues, 'lang':lang})
 
-def detailfreelancer(request, id):
-    c_emploi = C_emploi.objects.get(id=id)
+def detailfreelancer(request, myid): 
+    c_emploi = C_emploi.objects.get(id=myid)
     iddd = c_emploi.user_id
     lm = LangueMaitrise.objects.filter(c_emploi_id=iddd)
-    k = C_emploi.objects.get(id=id)
+    k = C_emploi.objects.get(id=myid)
     return render(request, "freelancer/detailfreelancer.html", {'k':k, 'lm':lm})
 
 def services(request):

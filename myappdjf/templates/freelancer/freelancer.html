@@ -7,7 +7,7 @@
     <!-- ======= Testimonials Section ======= -->
     <section id="testimonials" class="testimonials section-bg">
       <div class="container">
-
+ 
         <div class="section-title">
           <br><br>
           <h2>C'est comment? </h2>
@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="col-lg-2 col-md-4 ">
                                     {% comment %} <button type="button" class="btn btn-succes">Chercher</button> {% endcomment %}
-                                    <button type="submit" value="Submit" style="background-color:rgb(71, 177, 253); height:50px; width:150px">Chercher</button>
+                                    <button type="submit" value="Submit" class="btn btn-success">Chercher</button>
                                 </div>
                             </div>
                         </div>
@@ -57,21 +57,15 @@
      {% for c in c_emplois %}
             <div class="swiper-slide">
               <div class="testimonial-item">
-               
                 <img src="{{c.image.url}}" class="testimonial-img" alt="">
                 <h3>{{c.user.first_name}} {{c.user.last_name}}</h3>
                 <h4>{{c.user.email}}</h4>
-				<h4>{{c.description}}</h4>
-				<h4>{{c.experience}} ans d'experience</h4>
-				<h4>{{c.telephone}}</h4>
-			   
-							   
-                 {% comment %} <button type="submit" value="Submit" style="background-color:rgb(71, 177, 253); height:50px; width:150px">Détails</button> {% endcomment %}
-				<a href="/detailfreelancer/{{c.id}}" class="btn btn-success"> Détails</a>
-			 
-              </div>
-            </div><!-- End testimonial item -->
-            {% endfor %}
+                <h4>{{c.description}}</h4>
+                <h4>{{c.experience}} ans d'experience</h4>
+                <h4>{{c.telephone}}</h4> <a href="/detailfreelancer/{{c.id}}" class="btn btn-success"> Détails</a>
+			        </div>
+            </div>
+      {% endfor %}
           </div>
           <div class="swiper-pagination"></div>
         </div>
