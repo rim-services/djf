@@ -28,11 +28,11 @@
                         <table id="data_table" class="table">
                             <thead>
         <tr>
-            <th>Numero</th>
+          
             <th>Nom directeur</th>
             <th>Email</th>
             <th>Contact</th>
-            <th>sexe</th>
+         
             <th>Nom entreprise</th>
             <th>Image</th>
             <th>Status</th>
@@ -45,11 +45,10 @@
    
         {% for entreprise in entreprises %}
         <tr>
-            <td>{{forloop.counter}}</td>
+           
             <td>{{entreprise.user.get_full_name}}</td>
             <td>{{entreprise.user.email}}</td>
             <td>{{entreprise.telephone}}</td>
-            <td>{{entreprise.sexe}}</td>
             <td>{{entreprise.nom_entreprise}}</td>
             <td><img src="{{entreprise.image.url}}" class="table-user-thumb"></td>
             <td>{{entreprise.status}}</td>

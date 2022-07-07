@@ -1,10 +1,24 @@
-{% extends 'basic.html' %}
+{% extends 'index.html' %}
+{% block title %} page d'inscription pour entreprise {% endblock %}
 
-{% block title %} Creation du compte pour l'entreprise {% endblock %}
-{% block connexion_entreprise %} active {% endblock %}
 {% block css %}
 {% endblock %}
 {% block body %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Entreprise</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet" href="{% static 'login/style.css' %}"> 
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="logo text-center">
+  <br><br><br>
+</div>
 <form class="container mt-4" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
 

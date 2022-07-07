@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from pymysql import NULL
 from . models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -330,6 +331,7 @@ def inscription_entreprise(request):
         entreprise = Entreprise.objects.create(user=user, telephone=telephon, sexe=sexe, image=image, nom_entreprise=nom_entreprise, type="entreprise", status="non_confirmer")
         user.save()
         entreprise.save()
+        
         return render(request, "connexion_entreprise.html")
     return render(request, "inscription_entreprise.html")
 
@@ -556,6 +558,7 @@ def languesmaitrise(request):
         langue = Langue.objects.get(id=langueid)
         id = c_emploi.user_id
         
+            
         lm = LangueMaitrise.objects.create(c_emploi=c_emploi, langue=langue)
         lm.save()
         

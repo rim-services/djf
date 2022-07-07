@@ -1,10 +1,29 @@
 {% extends 'company_navbar.html' %}
 
-{% block title %} Ajouter un recrutement {% endblock %}
-{% block publier_annonce %} active {% endblock %}
+{% block title %} Profile de l'entreprise {% endblock %}
+{% block home %} active {% endblock %}
 {% block css %}
 {% endblock %}
 {% block body %}
+
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="page-header">
+            <div class="row align-items-end">
+                <div class="col-lg-8">
+                    <div class="page-header-title">
+                        <i class="ik ik-inbox bg-blue"></i>
+                      
+                    </div>
+                </div>
+           
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
 <form class="container mt-3" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
 
@@ -58,7 +77,15 @@
         </div>
     </div>
 <input type="submit" value="Submit" class="btn mt-3" style="background-color: #4f868c; color: white; font-size: larger; width: 8rem;">
-</form>
+
+<br><br><br></form>
+
+</div>
+       
+</div>
+</div>
+</div>
+</div>
 {% endblock %}
 {% block js %}
 <script>

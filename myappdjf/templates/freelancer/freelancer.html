@@ -7,8 +7,14 @@
     <!-- ======= Testimonials Section ======= -->
     <section id="testimonials" class="testimonials section-bg">
       <div class="container">
+<<<<<<< HEAD
 
         <div class="section-title">
+=======
+ 
+        <div class="section-title">
+          <br><br>
+>>>>>>> 91a7b4df490bc4120fb8dbec6bfbefbd8f0d5b10
           <h2>C'est comment? </h2>
           <p>Lors que vous selectionné votre freelancer, vous pouvez lui contacter sur son email, numéro téléphone ou whatsapp.</p>
         </div>
@@ -44,7 +50,11 @@
                                 </div>
                                 <div class="col-lg-2 col-md-4 ">
                                     {% comment %} <button type="button" class="btn btn-succes">Chercher</button> {% endcomment %}
+<<<<<<< HEAD
                                     <button type="submit" value="Submit" style="background-color:rgb(71, 177, 253); height:50px; width:150px">Chercher</button>
+=======
+                                    <button type="submit" value="Submit" class="btn btn-success">Chercher</button>
+>>>>>>> 91a7b4df490bc4120fb8dbec6bfbefbd8f0d5b10
                                 </div>
                             </div>
                         </div>
@@ -56,6 +66,7 @@
      {% for c in c_emplois %}
             <div class="swiper-slide">
               <div class="testimonial-item">
+<<<<<<< HEAD
                
                 <img src="{{c.image.url}}" class="testimonial-img" alt="">
                 <h3>{{c.user.first_name}} {{c.user.last_name}}</h3>
@@ -71,6 +82,17 @@
               </div>
             </div><!-- End testimonial item -->
             {% endfor %}
+=======
+                <img src="{{c.image.url}}" class="testimonial-img" alt="">
+                <h3>{{c.user.first_name}} {{c.user.last_name}}</h3>
+                <h4>{{c.user.email}}</h4>
+                <h4>{{c.description}}</h4>
+                <h4>{{c.experience}} ans d'experience</h4>
+                <h4>{{c.telephone}}</h4> <a href="/detailfreelancer/{{c.id}}" class="btn btn-success"> Détails</a>
+			        </div>
+            </div>
+      {% endfor %}
+>>>>>>> 91a7b4df490bc4120fb8dbec6bfbefbd8f0d5b10
           </div>
           <div class="swiper-pagination"></div>
         </div>
