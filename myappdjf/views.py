@@ -11,6 +11,19 @@ from rest_framework.response import Response
 from rest_framework import status, filters
 from rest_framework.decorators import api_view
 from .serializers import *
+from selenium import webdriver
+import os
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.utils import ChromeType
+
+
+chrome_options = webdriver.ChromeOptions()
+chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--no-sandbox")
 
 
 
@@ -60,7 +73,8 @@ def stat(request):
 
 def connexion_chercheur_emploi(request): 
     if request.user.is_authenticated:
-        return redirect("/page_home_chercheur_emploi")
+    
+         return redirect("/page_home_chercheur_emploi")
     else:
         if request.method == "POST":
             username = request.POST['username']
@@ -190,7 +204,7 @@ def les_annonces_emploi(request):
     for i in lm:
         key=key+" "+i
     
-    browser=webdriver.Chrome("chromedriver.exe")    
+    browser = webdriver.Chrome(service=Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()))   
     browser.get("https://www.linkedin.com/jobs/search?keywords="+key+"&location=""&position=1&pageNum=0")
     jobs_titres=browser.find_elements_by_class_name("base-search-card__title")
     tt=[] 

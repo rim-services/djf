@@ -1,9 +1,111 @@
-{% extends 'user_navbar.html' %}
-{% block title %} Profile de l'utilisateur {% endblock %}
-{% block home %} active {% endblock %}
-{% block css %}
-{% endblock %}
-{% block body %}
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>PEM</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">
+        
+        <link rel="stylesheet" href="{% static 'node_modules/bootstrap/dist/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'node_modules/@fortawesome/fontawesome-free/css/all.min.css' %}">
+        <link rel="stylesheet" href="{% static 'node_modules/icon-kit/dist/css/iconkit.min.css' %}">
+        <link rel="stylesheet" href="{% static 'node_modules/ionicons/dist/css/ionicons.min.css' %}">
+        <link rel="stylesheet" href="{% static 'node_modules/perfect-scrollbar/css/perfect-scrollbar.css' %}">
+        <link rel="stylesheet" href="{% static 'node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}">
+        <link rel="stylesheet" href="{% static 'node_modules/jvectormap/jquery-jvectormap.css' %}">
+        <link rel="stylesheet" href="{% static 'node_modules/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css' %}">
+        <link rel="stylesheet" href="{% static 'node_modules/weather-icons/css/weather-icons.min.css' %}">
+        <link rel="stylesheet" href="{% static 'node_modules/c3/c3.min.css' %}">
+        <link rel="stylesheet" href="{% static 'node_modules/perfect-scrollbar/css/perfect-scrollbar.css' %}">
+        <link rel="stylesheet" href="{% static 'node_modules/owl.carousel/dist/assets/owl.carousel.css' %}">
+        <link rel="stylesheet" href="{% static 'node_modules/owl.carousel/dist/assets/owl.theme.default.css' %}">
+        <link rel="stylesheet" href="{% static 'dist/css/theme.min.css' %}">
+        <script src="{% static 'src/js/vendor/modernizr-2.8.3.min.js' %}"></script>        
+  <title>{% block title %}{% endblock %}</title>
+  
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header class="header-top" header-theme="light">
+
+      <div class="container-fluid">
+        <div class="d-flex justify-content-between">
+            <div class="top-menu d-flex align-items-center">
+                <button type="button" class="btn-icon mobile-nav-toggle d-lg-none"><span></span></button>
+                <div class="header-search">
+                    <div class="input-group">
+                        <span class="input-group-addon search-close"><i class="ik ik-x"></i></span>
+                        <input type="text" class="form-control">
+                        <span class="input-group-addon search-btn"><i class="ik ik-search"></i></span>
+                    </div>
+                </div>
+                <button type="button" id="navbar-fullscreen" class="nav-link"><i class="ik ik-maximize"></i></button>
+            </div>
+            <div class="top-menu d-flex align-items-center">
+                
+                <button type="button" class="nav-link ml-10 right-sidebar-toggle"><i class="ik ik-message-square"></i><span class="badge bg-success">3</span></button>
+               
+                <button type="button" class="nav-link ml-10" id="apps_modal_btn" data-toggle="modal" data-target="#appsModal"><i class="ik ik-grid"></i></button>
+                <div class="dropdown">
+                    <a class="dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="avatar" src="{% static 'img/user.jpg'%}" alt=""></a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                      
+                        <a class="dropdown-item"  href="/deconnecter/"><i class="ik ik-power dropdown-icon"></i> Deconnecter</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </header>
+
+    <div class="page-wrap">
+        <div class="app-sidebar colored">
+            <div class="sidebar-header">
+                <a class="header-brand" href="index.html">
+                    
+                    <span class="text">Coté Cemploi</span>
+                </a>
+                <button type="button" class="nav-toggle"><i data-toggle="expanded" class="ik ik-toggle-right toggle-icon"></i></button>
+                <button id="sidebarClose" class="nav-close"><i class="ik ik-x"></i></button>
+            </div>
+            
+            <div class="sidebar-content">
+                <div class="nav-container">
+                    <nav id="main-menu-navigation" class="navigation-main">
+                       
+                        <div class="nav-item active">
+                            <a href="/page_home_chercheur_emploi/"><i class="ik ik-bar-chart-2"></i><span>Home</span></a>
+                        </div>
+						<div class="nav-item">
+                            <a href="/les_annonces_emploi/"><i class="ik ik-menu"></i><span>Afficher les annonces</span> </a>
+                        </div>
+                       
+						
+                        <div class="nav-item has-sub">
+                            <a href="javascript:void(0)"><i class="ik ik-layers"></i><span>Langues maitrisées</span> </a>
+                            <div class="submenu-content">
+                                <a href="/languesmaitrise/" class="menu-item">Gérer mes langues</a>
+                                <a href="" class="menu-item">Ajouter une langue</a>
+                            </div>
+                        </div>
+                       
+                     
+                        
+                    </nav>
+                </div>
+            </div>
+        </div>
+<div class="main-content">
 <div class="container">
     <section class="search-sec">
         <div class="container">
@@ -21,7 +123,7 @@
                             </div>
                             <div class="col-lg-2 col-md-4 ">
                                 {% comment %} <button type="button" class="btn btn-succes">Chercher</button> {% endcomment %}
-                                <button type="submit" value="Submit" style="background-color:green; height:50px; width:150px">Enregistrer</button>
+                                <button type="submit" value="Submit" style="background-color:gray; height:33px; width:150px">Enregistrer</button>
                             </div>
                         </div>
                     </div>
@@ -49,12 +151,49 @@
         </tbody>
     </table>
 </div>
-{% endblock %}
-{% block js %}
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>window.jQuery || document.write('<script src="src/js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
+<script src="{% static 'node_modules/popper.js/dist/umd/popper.min.js' %}"></script>
+<script src="{% static 'node_modules/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js' %}"></script>
+<script src="{% static 'node_modules/screenfull/dist/screenfull.js' %}"></script>
+<script src="{% static 'node_modules/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'node_modules/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'node_modules/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'node_modules/jvectormap/jquery-jvectormap.min.js' %}"></script>
+<script src="{% static 'node_modules/jvectormap/tests/assets/jquery-jvectormap-world-mill-en.js' %}"></script>
+<script src="{% static 'node_modules/moment/moment.js' %}"></script>
+<script src="{% static 'node_modules/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<script src="{% static 'node_modules/d3/dist/d3.min.js' %}"></script>
+<script src="{% static 'node_modules/c3/c3.min.js' %}"></script>
+<script src="{% static 'js/tables.js' %}"></script>
+<script src="{% static 'js/widgets.js' %}"></script>
+<script src="{% static 'js/charts.js' %}"></script>
+<script src="{% static 'dist/js/theme.min.js' %}"></script>
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+<script>
+  (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+  function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+  e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+  e.src='https://www.google-analytics.com/analytics.js';
+  r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+  ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+</script>
 <script>
     {% if alert %}
-    alert("Le lang a ete ajouter avec succes")
+    alert("Le profile a été modifiées avec succées")
     window.location = "/page_home_chercheur_emploi"
     {% endif %}
 </script>
+
+        
+{% block body %}
 {% endblock %}
+</body>
+
+
+</html>
